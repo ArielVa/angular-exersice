@@ -1,16 +1,18 @@
 export class Question {
-	constructor(private caption: string, private answers: string[], private correct: number) {
+
+	constructor(public caption: string, public answers: string[], public correct: number) {
+
 	}
 
-	get Caption(): string {
+	get Caption() {
 		return this.caption;
 	}
 
-	get Answers(): string[] {
+	get Answers() {
 		return this.answers
 	}
 
-	get CorrectAnswerIndex(): number {
+	get CorrectAnswerIndex() {
 		return this.correct;
 	}
 }

@@ -9,28 +9,32 @@
   <body>
     <h1>Pop Quiz!</h1>
 
-    <form>
+    <form id="quiz-form">
       <fieldset>
-        <legend><h4 id="question">Choose your favorite monster</h4></legend>
+        <legend><h4 id="question-caption">Choose your favorite monster</h4></legend>
         <div>
-          <input type="radio" id="ans-input-" name="answer">
-          <label id="ans-label-1">Kraken</label>
+          <input type="radio" id="ans-input-1" name="answer">
+          <label id="ans-label-1">One</label>
         </div>
         <div>
           <input type="radio" id="ans-input-2" name="answer">
-          <label id=ans-label-2>asdf</label>
+          <label id=ans-label-2>Two</label>
         </div>
 
         <div>
           <input type="radio" id="ans-input-3" name="answer">
-          <label id="ans-label-3">Mothman</label>
+          <label id="ans-label-3">Three</label>
         </div>
         <div>
           <input type="radio" id="ans-input-4" name="answer">
-          <label id="ans-label-4">Mothman</label>
+          <label id="ans-label-4">Four</label>
         </div>
       </fieldset>
     </form>
+
+    <div class="summary-area">
+      <h4 id="exam-score-text" style="display: none">Exam Score:<span id="exam-score"></span></h4>
+    </div>
 
 
     <script src="main-bundle.js"></script>

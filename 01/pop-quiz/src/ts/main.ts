@@ -1,14 +1,41 @@
 import {Question} from "./model/Question";
 import {QUESTIONS_DB} from "./data/QuestionsDB";
+import {Exam} from "./model/Exam";
+import {ExamRunner} from "./model/ExamRunner";
+import {View} from "./view-model/view";
 
 
-console.log('Hello World');
 
-const label = document.getElementById("ans-label-2") as HTMLInputElement;
-label.innerText ="kekw"
+const allQuestions = QUESTIONS_DB as unknown as Question[];
+
+const examQuestions: Question[] = [];
+while(examQuestions.length != 10) {
+	const i = Math.floor(Math.random() * allQuestions.length);
+	!examQuestions.includes(allQuestions[i]) ? examQuestions.push(allQuestions[i]) : undefined;
+}
+
+const examRunner: ExamRunner = new ExamRunner(new Exam(examQuestions));
+const view: View = new View();
 
 
-const question = new Question("When was Israel founded?", ["1733", "1947", "1948", "1849"], 3)
-const q2 = new Question("6 / (2 * (1 + 2)) = ?", ["9", "1", "6", "12"], 2);
-console.log(JSON.stringify([question, q2]))
-console.log(QUESTIONS_DB as unknown as Question[])
+view.render(examRunner);
+
+const inputs: HTMLInputElement[] = [];
+for(let i=1; i<=4; i++) {
+	inputs.push(document.getElementById("ans-input-" + i) as HTMLInputElement);
+	inputs[i-1].addEventListener('click', () => {
+		setTimeout(() => {
+			optionClicked(i);
+			inputs[i-1].checked = false;
+		}, 100)
+	})
+
+}
+
+function optionClicked(answer: number) {
+	examRunner.answerNextQuestion(answer);
+
+	view.render(examRunner);
+	console.log(examRunner);
+}
+

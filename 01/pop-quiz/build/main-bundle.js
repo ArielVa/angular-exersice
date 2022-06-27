@@ -93,7 +93,7 @@ exports.QUESTIONS_DB = [
         "correct": 2
     },
     {
-        "caption": "There are a total of X seasons of the TV show LOST",
+        "caption": "How many seasons does the tv series LOST has?",
         "answers": [
             "6",
             "5",
@@ -257,45 +257,175 @@ exports.QUESTIONS_DB = [
 
 /***/ }),
 
-/***/ "./src/ts/model/Question.ts":
-/*!**********************************!*\
-  !*** ./src/ts/model/Question.ts ***!
-  \**********************************/
+/***/ "./src/ts/model/Answer.ts":
+/*!********************************!*\
+  !*** ./src/ts/model/Answer.ts ***!
+  \********************************/
 /***/ ((__unused_webpack_module, exports) => {
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Question = void 0;
-var Question = /** @class */ (function () {
-    function Question(caption, answers, correct) {
-        this.caption = caption;
-        this.answers = answers;
-        this.correct = correct;
+exports.Answer = void 0;
+var Answer = /** @class */ (function () {
+    function Answer(index, isCorrect) {
+        this.index = index;
+        this.isCorrect = isCorrect;
     }
-    Object.defineProperty(Question.prototype, "Caption", {
+    Object.defineProperty(Answer.prototype, "Index", {
         get: function () {
-            return this.caption;
+            return this.index;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Question.prototype, "Answers", {
+    Object.defineProperty(Answer.prototype, "IsCorrect", {
+        get: function () {
+            return this.isCorrect;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return Answer;
+}());
+exports.Answer = Answer;
+
+
+/***/ }),
+
+/***/ "./src/ts/model/Exam.ts":
+/*!******************************!*\
+  !*** ./src/ts/model/Exam.ts ***!
+  \******************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Exam = void 0;
+var Exam = /** @class */ (function () {
+    function Exam(questions) {
+        this.questions = questions;
+    }
+    Object.defineProperty(Exam.prototype, "Questions", {
+        get: function () {
+            return this.questions;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return Exam;
+}());
+exports.Exam = Exam;
+
+
+/***/ }),
+
+/***/ "./src/ts/model/ExamRunner.ts":
+/*!************************************!*\
+  !*** ./src/ts/model/ExamRunner.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ExamRunner = void 0;
+var Answer_1 = __webpack_require__(/*! ./Answer */ "./src/ts/model/Answer.ts");
+var ExamRunner = /** @class */ (function () {
+    function ExamRunner(exam) {
+        this.exam = exam;
+        this.answers = [];
+        this.currentQuestionIndex = 0;
+    }
+    Object.defineProperty(ExamRunner.prototype, "Answers", {
         get: function () {
             return this.answers;
         },
         enumerable: false,
         configurable: true
     });
-    Object.defineProperty(Question.prototype, "CorrectAnswerIndex", {
+    Object.defineProperty(ExamRunner.prototype, "Exam", {
         get: function () {
-            return this.correct;
+            return this.exam;
         },
         enumerable: false,
         configurable: true
     });
-    return Question;
+    Object.defineProperty(ExamRunner.prototype, "CurrentQuestion", {
+        get: function () {
+            return this.exam.Questions[this.currentQuestionIndex];
+        },
+        enumerable: false,
+        configurable: true
+    });
+    ExamRunner.prototype.checkExamOver = function () {
+        // TODO - SAY if the exam is over
+        return this.currentQuestionIndex == this.exam.Questions.length;
+    };
+    ExamRunner.prototype.currentScore = function () {
+        // TODO - return percentage of correct answers;
+        var s = 0.0;
+        this.answers.forEach(function (ans) { return ans.IsCorrect ? s++ : s; });
+        if (this.answers.length > 0)
+            console.log(s, this.answers[0], this.answers[0].IsCorrect);
+        return this.answers.length > 0 ? s / this.answers.length : 0;
+    };
+    ExamRunner.prototype.answerNextQuestion = function (answerIndex) {
+        // TODO - check if current answer is correct, append to answers list
+        this.answers.push(new Answer_1.Answer(answerIndex, this.exam.Questions[this.currentQuestionIndex].correct === answerIndex));
+        this.currentQuestionIndex++;
+    };
+    return ExamRunner;
 }());
-exports.Question = Question;
+exports.ExamRunner = ExamRunner;
+
+
+/***/ }),
+
+/***/ "./src/ts/view-model/view.ts":
+/*!***********************************!*\
+  !*** ./src/ts/view-model/view.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.View = void 0;
+var View = /** @class */ (function () {
+    function View() {
+        this.inputs = [];
+        this.labels = [];
+        this.form = document.getElementById('quiz-form');
+        this.caption = document.getElementById('question-caption');
+        for (var i = 1; i <= 4; i++) {
+            this.inputs.push(document.getElementById("ans-input-" + i));
+            this.labels.push(document.getElementById("ans-label-" + i));
+        }
+        this.examScoreText = document.getElementById('exam-score-text');
+        this.score = document.getElementById('exam-score');
+    }
+    View.prototype.setQuestionCaption = function (caption) {
+        this.caption.innerText = caption;
+    };
+    View.prototype.setQuestionLabels = function (labels) {
+        var _this = this;
+        labels.forEach(function (label, i) {
+            _this.labels[i].innerText = label;
+        });
+    };
+    View.prototype.render = function (examRunner) {
+        if (!examRunner.checkExamOver()) {
+            var q = examRunner.CurrentQuestion;
+            this.setQuestionCaption(q.caption);
+            this.setQuestionLabels(q.answers);
+        }
+        else {
+            this.form.style.display = 'none';
+            this.examScoreText.style.display = 'inherit';
+            this.score.innerText = (examRunner.currentScore() * 100).toFixed(2).toString() + '%';
+        }
+    };
+    return View;
+}());
+exports.View = View;
 
 
 /***/ })
@@ -336,15 +466,37 @@ var exports = __webpack_exports__;
   \************************/
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-var Question_1 = __webpack_require__(/*! ./model/Question */ "./src/ts/model/Question.ts");
 var QuestionsDB_1 = __webpack_require__(/*! ./data/QuestionsDB */ "./src/ts/data/QuestionsDB.ts");
-console.log('Hello World');
-var label = document.getElementById("ans-label-2");
-label.innerText = "kekw";
-var question = new Question_1.Question("When was Israel founded?", ["1733", "1947", "1948", "1849"], 3);
-var q2 = new Question_1.Question("6 / (2 * (1 + 2)) = ?", ["9", "1", "6", "12"], 2);
-console.log(JSON.stringify([question, q2]));
-console.log(QuestionsDB_1.QUESTIONS_DB);
+var Exam_1 = __webpack_require__(/*! ./model/Exam */ "./src/ts/model/Exam.ts");
+var ExamRunner_1 = __webpack_require__(/*! ./model/ExamRunner */ "./src/ts/model/ExamRunner.ts");
+var view_1 = __webpack_require__(/*! ./view-model/view */ "./src/ts/view-model/view.ts");
+var allQuestions = QuestionsDB_1.QUESTIONS_DB;
+var examQuestions = [];
+while (examQuestions.length != 10) {
+    var i = Math.floor(Math.random() * allQuestions.length);
+    !examQuestions.includes(allQuestions[i]) ? examQuestions.push(allQuestions[i]) : undefined;
+}
+var examRunner = new ExamRunner_1.ExamRunner(new Exam_1.Exam(examQuestions));
+var view = new view_1.View();
+view.render(examRunner);
+var inputs = [];
+var _loop_1 = function (i) {
+    inputs.push(document.getElementById("ans-input-" + i));
+    inputs[i - 1].addEventListener('click', function () {
+        setTimeout(function () {
+            optionClicked(i);
+            inputs[i - 1].checked = false;
+        }, 100);
+    });
+};
+for (var i = 1; i <= 4; i++) {
+    _loop_1(i);
+}
+function optionClicked(answer) {
+    examRunner.answerNextQuestion(answer);
+    view.render(examRunner);
+    console.log(examRunner);
+}
 
 })();
 

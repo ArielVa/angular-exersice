@@ -80,7 +80,7 @@ export const QUESTIONS_DB = [
     "correct": 2
   },
   {
-    "caption": "There are a total of X seasons of the TV show LOST",
+    "caption": "How many seasons does the tv series LOST has?",
     "answers": [
       "6",
       "5",

@@ -1,5 +1,5 @@
 export class Answer {
-	constructor(private index: number, private isBoolean: boolean) {
+	constructor(private index: number, private isCorrect: boolean) {
 	}
 
 	get Index() {
@@ -7,6 +7,6 @@ export class Answer {
 	}
 
 	get IsCorrect() {
-		return this.isBoolean;
+		return this.isCorrect;
 	}
 }

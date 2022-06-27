@@ -84,11 +84,8 @@ export class AppComponent {
     this.currentGuessNum = 0;
     this.playerWon = this.gameOver = false;
     this.cells = [];
-    for(let i =0; i < this.WORD_LENGTH * this.MAX_NUM_OF_GUESSES; i++) {
+    for (let i = 0; i < this.WORD_LENGTH * this.MAX_NUM_OF_GUESSES; i++) {
       this.cells.push(new Cell());
     }
   }
-
-
-
 }
