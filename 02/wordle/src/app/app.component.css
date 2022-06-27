@@ -1,9 +1,80 @@
 :host {
   display: grid;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-app-title {
+.app-title {
+  font-size: 48px;
+  margin-top: 8px;
+  grid-column: 2;
   text-align: center;
+}
+.input-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 2;
+
+}
+
+.btnOk {
+  width: 40px;
+  height: 30px;
+  border-radius: 4px;
+}
+
+input {
+  margin-left: 4px;
+  height: 30px;
+  font-size: 24px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.cell-area {
+  margin-top: 8px;
+  display: grid;
+  grid-column: 2;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
+}
+
+.cell-area input {
+  margin-top: 4px;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  font-size: 48px;
+  border-radius: 16px;
+}
+
+input.wrong {
+  color: red;
+}
+
+input.exist {
+  color: royalblue;
+}
+
+input.exact {
+  color: lawngreen;
+}
+
+.game-over-area {
+  width: 100%;
+  grid-column: 2;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+
+}
+
+.btnPlayAgain {
+  border-radius: 4px;
+  font-size: 24px;
+  width: 100%;
 }

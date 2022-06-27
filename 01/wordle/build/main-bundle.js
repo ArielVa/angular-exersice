@@ -173,7 +173,7 @@ var View2 = /** @class */ (function () {
         this.btnReset = document.getElementById("button-reset");
         this.gameOverText = document.getElementById("game-over");
         this.gameOverStatus = document.getElementById("game-over-status");
-        // this.btnOK.addEventListener('click', cbf.bind(this, this.inputGuess.value));
+        this.btnOK.addEventListener('click', cbf.bind(this, this.inputGuess.value));
     }
     return View2;
 }());

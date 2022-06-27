@@ -1,2 +1,25 @@
-<h1></h1>
-<h2 class="title">Wordle Game</h2>
+<h2 class="app-title">Wordle Game</h2>
+<div class="input-area">
+  <input #inputGuess
+         type="search"
+         [maxLength]="WORD_LENGTH"
+         [disabled]="gameOver">
+  <button class="btnOk"
+          (click)="playerGuessFlow(inputGuess.value)"
+          [disabled]="gameOver">OK</button>
+</div>
+<div class="cell-area">
+  <input *ngFor="let item of cells"
+         [value]="item.CellContent | titlecase"
+         [class.wrong]="item.CellStatus === 1"
+         [class.exist]="item.CellStatus === 2"
+         [class.exact]="item.CellStatus === 3"
+  >
+</div>
+<div class="game-over-area" *ngIf="gameOver">
+    <h1 *ngIf="playerWon">Game Over - You Won</h1>
+    <h1 *ngIf="!playerWon">Game Over - You Lost</h1>
+    <button class="btnPlayAgain"
+            (click)="newGame()"
+    >Play Again</button>
+</div>
