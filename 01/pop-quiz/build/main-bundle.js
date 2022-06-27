@@ -357,19 +357,14 @@ var ExamRunner = /** @class */ (function () {
         configurable: true
     });
     ExamRunner.prototype.checkExamOver = function () {
-        // TODO - SAY if the exam is over
-        return this.currentQuestionIndex == this.exam.Questions.length;
+        return this.currentQuestionIndex === this.exam.Questions.length;
     };
     ExamRunner.prototype.currentScore = function () {
-        // TODO - return percentage of correct answers;
         var s = 0.0;
         this.answers.forEach(function (ans) { return ans.IsCorrect ? s++ : s; });
-        if (this.answers.length > 0)
-            console.log(s, this.answers[0], this.answers[0].IsCorrect);
         return this.answers.length > 0 ? s / this.answers.length : 0;
     };
     ExamRunner.prototype.answerNextQuestion = function (answerIndex) {
-        // TODO - check if current answer is correct, append to answers list
         this.answers.push(new Answer_1.Answer(answerIndex, this.exam.Questions[this.currentQuestionIndex].correct === answerIndex));
         this.currentQuestionIndex++;
     };

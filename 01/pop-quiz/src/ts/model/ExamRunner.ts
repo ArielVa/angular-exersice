@@ -25,7 +25,6 @@ export class ExamRunner {
 		return this.currentQuestionIndex === this.exam.Questions.length;
 	}
 
-
 	currentScore(): number {
 		let s = 0.0;
 		this.answers.forEach(ans => ans.IsCorrect ? s++ : s);
