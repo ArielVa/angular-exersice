@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Wordle Game</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Wordle Game</h1>
+    <h2>Enter the next guess</h2>
+    <input id="input-guess" placeholder="YOUR GUESS HERE" maxlength="5" minlength="5" type="text"/><button id="button-ok">OK</button>
+
+    <hr>
+    <div id="row_1">
+      <input id="input_1_1" type="text" readonly="readonly" />
+      <input id="input_1_2" type="text" readonly="readonly"/>
+      <input id="input_1_3" type="text" readonly="readonly"/>
+      <input id="input_1_4" type="text" readonly="readonly"/>
+      <input id="input_1_5" type="text" readonly="readonly"/>
+    </div>
+    <div id="row_2">
+      <input id="input_2_1" type="text" readonly="readonly"/>
+      <input id="input_2_2" type="text" readonly="readonly"/>
+      <input id="input_2_3" type="text" readonly="readonly"/>
+      <input id="input_2_4" type="text" readonly="readonly"/>
+      <input id="input_2_5" type="text" readonly="readonly"/>
+    </div>
+    <div id="row_3">
+      <input id="input_3_1" type="text" readonly="readonly"/>
+      <input id="input_3_2" type="text" readonly="readonly"/>
+      <input id="input_3_3" type="text" readonly="readonly"/>
+      <input id="input_3_4" type="text" readonly="readonly"/>
+      <input id="input_3_5" type="text" readonly="readonly"/>
+    </div>
+    <div id="row_4">
+      <input id="input_4_1" type="text" readonly="readonly"/>
+      <input id="input_4_2" type="text" readonly="readonly"/>
+      <input id="input_4_3" type="text" readonly="readonly"/>
+      <input id="input_4_4" type="text" readonly="readonly"/>
+      <input id="input_4_5" type="text" readonly="readonly"/>
+    </div>
+    <div id="row_5">
+      <input id="input_5_1" type="text" readonly="readonly"/>
+      <input id="input_5_2" type="text" readonly="readonly"/>
+      <input id="input_5_3" type="text" readonly="readonly"/>
+      <input id="input_5_4" type="text" readonly="readonly"/>
+      <input id="input_5_5" type="text" readonly="readonly"/>
+    </div>
+    <div id="row_6">
+      <input id="input_6_1" type="text" readonly="readonly"/>
+      <input id="input_6_2" type="text" readonly="readonly"/>
+      <input id="input_6_3" type="text" readonly="readonly"/>
+      <input id="input_6_4" type="text" readonly="readonly"/>
+      <input id="input_6_5" type="text" readonly="readonly"/>
+    </div>
+
+    <h2 id="game-over" style="display: none">GAME OVER - <span id="game-over-status">YOU LOSE</span></h2>
+    <button id="button-reset" style="display: none">RESET</button>
+
+    <script src="main-bundle.js"></script>
+  </body>
+</html>

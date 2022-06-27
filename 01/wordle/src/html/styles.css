@@ -1,0 +1,63 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 20%;
+    margin-top: 1rem;
+    margin-left: 40%;
+    background-color: whitesmoke;
+}
+
+div {
+    display: grid;
+    grid-template-columns: 30px 30px 30px 30px 30px;
+    grid-gap: 8px;
+    margin-top: 1%;
+    margin-left: 27%;
+}
+
+div input {
+    text-align: center;
+}
+
+h1 {
+    text-align: center
+}
+
+h1#game-over {
+
+}
+
+h2 {
+    margin-bottom: 2px;
+}
+
+h2#game-over {
+    margin-left: 48px;
+    color: royalblue;
+}
+
+button {
+    margin-left: 10px;
+}
+
+button#button-reset {
+    width: 100%;
+    background-color: #64cdff;
+}
+
+hr {
+    margin-top: 6px;
+}
+
+::placeholder {
+    opacity: 0.65;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}

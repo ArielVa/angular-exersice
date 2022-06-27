@@ -1,0 +1,9 @@
+:host {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+app-title {
+  text-align: center;
+}
