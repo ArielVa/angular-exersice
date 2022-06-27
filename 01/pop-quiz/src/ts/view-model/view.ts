@@ -1,4 +1,3 @@
-import {Exam} from "../model/Exam";
 import {ExamRunner} from "../model/ExamRunner";
 import {Question} from "../model/Question";
 
