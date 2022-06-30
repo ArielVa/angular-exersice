@@ -19,7 +19,6 @@ const view: View = new View();
 
 
 view.render(examRunner);
-
 const inputs: HTMLInputElement[] = [];
 for(let i=1; i<=4; i++) {
 	inputs.push(document.getElementById("ans-input-" + i) as HTMLInputElement);
@@ -36,6 +35,5 @@ function optionClicked(answer: number) {
 	examRunner.answerNextQuestion(answer);
 
 	view.render(examRunner);
-	console.log(examRunner);
 }
 

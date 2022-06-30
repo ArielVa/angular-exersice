@@ -388,6 +388,9 @@ var View = /** @class */ (function () {
     function View() {
         this.inputs = [];
         this.labels = [];
+        this.summaryQuestionCaption = [];
+        this.summaryQuestionUserAnswer = [];
+        this.summaryQuestionCorrectAnswer = [];
         this.form = document.getElementById('quiz-form');
         this.caption = document.getElementById('question-caption');
         for (var i = 1; i <= 4; i++) {
@@ -396,6 +399,11 @@ var View = /** @class */ (function () {
         }
         this.examScoreText = document.getElementById('exam-score-text');
         this.score = document.getElementById('exam-score');
+        for (var i = 1; i <= 10; i++) {
+            this.summaryQuestionCaption.push(document.getElementById("summary-question-" + i));
+            this.summaryQuestionUserAnswer.push(document.getElementById("summary-user-answer-" + i));
+            this.summaryQuestionCorrectAnswer.push(document.getElementById("summary-correct-answer-" + i));
+        }
     }
     View.prototype.setQuestionCaption = function (caption) {
         this.caption.innerText = caption;
@@ -407,6 +415,7 @@ var View = /** @class */ (function () {
         });
     };
     View.prototype.render = function (examRunner) {
+        var _this = this;
         if (!examRunner.checkExamOver()) {
             var q = examRunner.CurrentQuestion;
             this.setQuestionCaption(q.caption);
@@ -416,6 +425,21 @@ var View = /** @class */ (function () {
             this.form.style.display = 'none';
             this.examScoreText.style.display = 'inherit';
             this.score.innerText = (examRunner.currentScore() * 100).toFixed(2).toString() + '%';
+            examRunner.Exam.Questions.forEach(function (q, i) {
+                _this.summaryQuestionCaption[i].innerText = (i + 1).toString() + ") " + q.caption;
+                _this.summaryQuestionCaption[i].style.display = 'inherit';
+                _this.summaryQuestionUserAnswer[i].innerText = q.answers[examRunner.Answers[i].Index - 1];
+                _this.summaryQuestionUserAnswer[i].style.display = 'inherit';
+                _this.summaryQuestionCorrectAnswer[i].innerText = q.answers[q.correct - 1];
+                _this.summaryQuestionCorrectAnswer[i].style.display = 'inherit';
+                _this.summaryQuestionCorrectAnswer[i].style.color = 'green';
+                if (q.answers[examRunner.Answers[i].Index - 1] === q.answers[q.correct - 1]) {
+                    _this.summaryQuestionUserAnswer[i].style.color = 'royalblue';
+                }
+                else {
+                    _this.summaryQuestionUserAnswer[i].style.color = 'red';
+                }
+            });
         }
     };
     return View;
@@ -490,7 +514,6 @@ for (var i = 1; i <= 4; i++) {
 function optionClicked(answer) {
     examRunner.answerNextQuestion(answer);
     view.render(examRunner);
-    console.log(examRunner);
 }
 
 })();

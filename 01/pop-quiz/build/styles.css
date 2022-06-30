@@ -12,7 +12,7 @@ html, body {
 body {
     display: grid;
     grid-template-rows: auto 1fr 10fr;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
     /*display: flex;*/
     /*flex-direction: column;*/
 }
@@ -31,7 +31,21 @@ form {
     grid-column: 2;
 }
 
+div > div {
+    margin-top: 1rem;
+}
+
+div.summary-questions {
+    grid-column: 2;
+    text-align: left;
+}
+
 div.summary-area {
     grid-column: 2;
     text-align: center;
+}
+
+#exam-score-text {
+    text-align: center;
+    color: teal;
 }

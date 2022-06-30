@@ -50,7 +50,6 @@ export class View {
 
 
 	private renderGame(game: Game): void {
-		// TODO - Render one specific row of entire game?
 		// const start = (game.NumOfFilledRows - 1) * game.WordLength;
 		// const end = start + game.WordLength;
 		// console.log(start, end)
