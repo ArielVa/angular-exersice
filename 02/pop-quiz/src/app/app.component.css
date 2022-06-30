@@ -1,0 +1,28 @@
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  height: 100%
+}
+
+h1 {
+  grid-column: 1 / -1;
+  border-style: double;
+  border-color: royalblue;
+}
+
+.main-area {
+  grid-column: 1 / 4;
+  border-style: double;
+  border-color: green;
+  margin-top: 1px;
+  margin-right: 1px;
+}
+
+.summary-area {
+  grid-column: 4 / -1;
+  border-style: double;
+  border-color: green;
+  margin-top: 1px;
+  margin-left: 1px;
+}

@@ -1,1 +1,8 @@
-<p>summary works!</p>
+<h2>Questions Summary</h2>
+
+<h3 *ngFor="let question of answeredQuestions; let i = index"
+    [class.nothing]="!question.userAnswer"
+    [class.wrong]="question.userAnswer && question.userAnswer != question.correct"
+    [class.correct]="question.userAnswer && question.userAnswer == question.correct">
+    {{i+1}}) {{question.caption}}
+</h3>

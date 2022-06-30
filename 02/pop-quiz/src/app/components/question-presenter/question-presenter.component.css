@@ -1,0 +1,20 @@
+:host {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-rows: 1fr auto auto auto auto;
+  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+}
+
+h2 {
+  grid-column: 2 / -2;
+}
+
+div {
+  text-align: left;
+  grid-column: 3;
+}
+
+label {
+  margin-left: 8px;
+  font-size: 24px;
+}
