@@ -10,18 +10,28 @@
   grid-column: 2;
   text-align: center;
 }
+
 .input-area {
   display: flex;
   align-items: center;
   justify-content: center;
   grid-column: 2;
+}
 
+h3 {
+  grid-column: 2;
+  text-align: center;
+}
+
+.hide {
+  opacity: 0;
 }
 
 .btnOk {
   width: 40px;
   height: 30px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 input {
@@ -29,6 +39,10 @@ input {
   font-size: 24px;
   text-align: center;
   border-radius: 4px;
+}
+
+.cell-area input {
+  background: antiquewhite;
 }
 
 .cell-area {
@@ -50,15 +64,22 @@ input {
 }
 
 input.wrong {
+  /*background: #ffa600;*/
   color: red;
 }
 
 input.exist {
+  /*background: #ffa600;*/
   color: royalblue;
 }
 
 input.exact {
-  color: lawngreen;
+  /*background: #aacfe3;*/
+  color: #19cc3d;
+}
+
+input.loading {
+  opacity: 0.25;
 }
 
 .game-over-area {

@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
-import {WORDS} from "./utils/words";
-import {Cell, CellStatus} from "./model/cell";
+import {Cell} from "./model/cell";
+import {WordService} from "./service/word.service";
+import {GameStateService} from "./service/gamestate.service";
+import {PlayerStateService} from "./service/playerstate.service";
 
 
 @Component({
@@ -13,6 +15,8 @@ export class AppComponent {
   wordToGuess: string = '';
   cells: Cell[] = [];
 
+  loadingText: string = '';
+  isGameInLoadingState: boolean = false;
   gameOver: boolean = false;
   playerWon: boolean = false;
 
@@ -20,72 +24,42 @@ export class AppComponent {
   readonly MAX_NUM_OF_GUESSES: number = 6;
   currentGuessNum: number = 0;
 
-  constructor() {
-    this.newGame();
-    console.log(this)
+  constructor(private wordService: WordService, private gameStateService: GameStateService, private playerStateService: PlayerStateService) {
+    this.newGame()
   }
 
-  private setWordToGuess(): void {
-    this.wordToGuess = WORDS[Math.floor(Math.random() * WORDS.length)]
+  private async setWordToGuess() {
+    this.wordToGuess = await this.wordService.generateRandomWord();
   }
 
-  private addGuess(value: string): void {
-    if(value === this.wordToGuess) {
-      for(let i=0; i<this.WORD_LENGTH; i++) {
-        this.cells[(this.currentGuessNum * this.WORD_LENGTH) + i].CellStatus = CellStatus.EXACT;
-        this.cells[(this.currentGuessNum * this.WORD_LENGTH) + i].CellContent = value[i];
-      }
-    } else {
-      for(let i=0; i < value.length; i++) {
-        let cellStatus: CellStatus = CellStatus.WRONG;
-        for(let j=0; j < this.wordToGuess.length; j++) {
-          if(value[i] === this.wordToGuess[j]) {
-            cellStatus = i === j ? CellStatus.EXACT : CellStatus.EXISTS;
-          }
-        }
-        this.cells[(this.currentGuessNum * this.WORD_LENGTH) + i].CellStatus = cellStatus;
-        this.cells[(this.currentGuessNum * this.WORD_LENGTH) + i].CellContent = value[i];
-      }
-    }
+  async playerGuessFlow(guess: string) {
+    // this.addGuess(guess);
+    this.loadingText = "Comparing words..."
+    this.isGameInLoadingState = true;
 
+    const resCells = await this.wordService.compareWords(guess, this.wordToGuess);
+    this.isGameInLoadingState = false;
+    resCells.forEach((cell, i) => {
+      this.cells[(this.currentGuessNum * this.WORD_LENGTH) + i] = new Cell(cell.CellContent, cell.CellStatus);
+    });
+
+    this.playerWon = await this.playerStateService.checkIfPlayerWon(this.currentGuessNum++, this.cells);
+
+    const gState = await this.gameStateService.checkIfGameIsOver(this.currentGuessNum);
+    this.gameOver = this.playerWon || gState;
   }
 
-  private setPlayerState(): void {
-    if(this.currentGuessNum > this.MAX_NUM_OF_GUESSES) {
-      this.playerWon = false;
-      return ;
-    }
-
-    for(let i=0; i<this.WORD_LENGTH; i++) {
-      if(this.cells[(this.currentGuessNum * this.WORD_LENGTH) + i].CellStatus !== CellStatus.EXACT) {
-       this.playerWon = false;
-       return;
-      }
-    }
-
-    this.playerWon = true;
-  }
-
-  private setGameState(): void {
-    this.gameOver = this.playerWon || this.currentGuessNum === this.MAX_NUM_OF_GUESSES;
-  }
-
-  playerGuessFlow(guess: string): void {
-    this.addGuess(guess);
-    this.setPlayerState();
-    this.currentGuessNum++;
-
-    this.setGameState();
-    console.log(this)
-  }
-
-  newGame(): void {
-    this.setWordToGuess();
+  async newGame() {
+    this.isGameInLoadingState = true;
     this.currentGuessNum = 0;
     this.playerWon = this.gameOver = false;
     this.cells = [];
     for (let i = 0; i < this.WORD_LENGTH * this.MAX_NUM_OF_GUESSES; i++) {
       this.cells.push(new Cell());
     }
+    this.loadingText = 'Loading New Game...'
+    await this.setWordToGuess();
+    this.isGameInLoadingState = false;
+    console.log(this);
   }
 }
