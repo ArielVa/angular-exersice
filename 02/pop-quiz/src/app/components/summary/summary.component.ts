@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question} from "../../utils/Question";
+import {Question} from "../../entities/Question";
 
 @Component({
   selector: 'app-summary',
@@ -15,7 +15,4 @@ export class SummaryComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-
-
 }

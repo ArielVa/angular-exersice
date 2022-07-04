@@ -1,11 +1,11 @@
 <h1>Pop Quiz!</h1>
 <div class="main-area">
   <app-question-presenter
-    *ngIf="!isQuizOver"
+    *ngIf="!isQuizOver && questions.length > 0"
     [question]="questions[currentQuestionIndex]"
     [numQuestion]="currentQuestionIndex+1"
     (answerSelected)="selectAnswer($event)"></app-question-presenter>
-  <app-quiz-over *ngIf="!isQuizOver" [quizQuestions]="questions"></app-quiz-over>
+  <app-quiz-over *ngIf="isQuizOver" [quizQuestions]="questions"></app-quiz-over>
 </div>
 <div class="summary-area">
   <app-summary [answeredQuestions]="questions"> </app-summary>

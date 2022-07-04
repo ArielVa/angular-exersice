@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import {Question} from "./utils/Question";
+import {Question} from "./entities/Question";
 import {QUESTIONS_DB} from "./utils/QuestionDB";
+import {QuestionService} from "./services/questionservice.service";
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -10,40 +12,28 @@ import {QUESTIONS_DB} from "./utils/QuestionDB";
 export class AppComponent {
   title = 'pop-quiz';
 
-  quizLength: number = 10;
   questions: Question[] = [];
 
   currentQuestionIndex: number = 0;
   isQuizOver: boolean = false;
 
-  private allQuestions: Question[] = QUESTIONS_DB as unknown as Question[];
 
-  constructor() {
-    this.loadNextQuestion()
+  constructor(private questionService: QuestionService) {
+    this.loadNextQuestion();
     console.log(this)
   }
 
-  // private populateQuizQuestions() {
-  //   while(this.questions.length != this.quizLength) {
-  //     const i = Math.floor(Math.random() * this.allQuestions.length);
-  //     !this.questions.includes(this.allQuestions[i]) ? this.questions.push(this.allQuestions[i]) : undefined;
-  //   }
-  // }
-
-  private loadNextQuestion() {
-    let i = Math.floor(Math.random() * this.allQuestions.length);
-    while(this.questions.includes(this.allQuestions[i])) {
-      i = Math.floor(Math.random() * this.allQuestions.length);
-    }
-    this.questions.push(this.allQuestions[i]);
+  private async loadNextQuestion() {
+    const q = await this.questionService.loadNewQuestion(this.questions);
+    this.questions.push(q);
   }
 
-  selectAnswer(answerIndex: number) {
+  async selectAnswer(answerIndex: number) {
     this.questions[this.currentQuestionIndex].userAnswer = answerIndex;
-    setTimeout(() => {
+    this.isQuizOver = this.currentQuestionIndex + 1 === environment.numOfQuestions;
+    if(!this.isQuizOver) {
+      await this.loadNextQuestion();
       this.currentQuestionIndex++;
-      this.isQuizOver = this.currentQuestionIndex === this.quizLength;
-      !this.isQuizOver ? this.loadNextQuestion() : undefined;
-    }, 200);
+    }
   }
 }

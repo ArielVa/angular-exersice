@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Question} from "../../utils/Question";
+import {Question} from "../../entities/Question";
 
 @Component({
   selector: 'app-quiz-over',
@@ -19,7 +19,7 @@ export class QuizOverComponent implements OnInit {
     this.calculateScore()
   }
 
-  calculateScore(): void {
+  async calculateScore(): Promise<void> {
     let nCorrect: number = 0;
     this.quizQuestions.forEach(question => {
       nCorrect += question.userAnswer === question.correct ? 1 : 0;
