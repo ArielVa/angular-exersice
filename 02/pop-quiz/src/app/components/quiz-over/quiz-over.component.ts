@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { ExamService } from 'src/app/services/exam.service';
 import {Question} from "../../entities/Question";
 
 @Component({
@@ -13,18 +14,14 @@ export class QuizOverComponent implements OnInit {
 
   score: string = '';
 
-  constructor() { }
+  constructor(private examService: ExamService) { }
 
   ngOnInit(): void {
     this.calculateScore()
   }
 
   async calculateScore(): Promise<void> {
-    let nCorrect: number = 0;
-    this.quizQuestions.forEach(question => {
-      nCorrect += question.userAnswer === question.correct ? 1 : 0;
-    });
-    this.score = ((nCorrect / this.quizQuestions.length) * 100).toFixed(2);
+    this.score = await this.examService.calculateExamScore();
   }
 
 }

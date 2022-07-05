@@ -1,30 +1,15 @@
 import { Injectable } from '@angular/core';
 import {Question} from "../entities/Question";
-import {QUESTIONS_DB} from "../utils/QuestionDB";
+import { ExamService } from './exam.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
-  private allQuestions: Question[] = QUESTIONS_DB as unknown as Question[];
-  private currentQuestion!: Question;
-  constructor() {
-  }
 
-  async loadNewQuestion(questions: Question[]): Promise<Question> {
-    return new Promise<Question>((resolve, reject) => {
-      setTimeout(() => {
-        let i = Math.floor(Math.random() * this.allQuestions.length);
-        while(questions.includes(this.allQuestions[i])) {
-          i = Math.floor(Math.random() * this.allQuestions.length);
-        }
-        resolve(this.currentQuestion = this.allQuestions[i]);
-      }, 150)
-    });
+  constructor(private examService: ExamService) {
   }
-
-  async getCurrentQuestion() {
-    return this.currentQuestion;
+  async answerQuestion(answerIndex: number) {
+    this.examService.exam.questions[this.examService.exam.currentQuestion++].userAnswer = answerIndex;
   }
-
 }

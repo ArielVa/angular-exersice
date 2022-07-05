@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {Question} from "./entities/Question";
-import {QUESTIONS_DB} from "./utils/QuestionDB";
 import {QuestionService} from "./services/questionservice.service";
-import {environment} from "../environments/environment";
+import { ExamService } from './services/exam.service';
+import { Exam } from './entities/Exam';
 
 @Component({
   selector: 'app-root',
@@ -12,28 +12,26 @@ import {environment} from "../environments/environment";
 export class AppComponent {
   title = 'pop-quiz';
 
-  questions: Question[] = [];
+  answeredQuestions: Question[] = [];
+  exam!: Exam;
 
-  currentQuestionIndex: number = 0;
   isQuizOver: boolean = false;
 
 
-  constructor(private questionService: QuestionService) {
-    this.loadNextQuestion();
-    console.log(this)
+  constructor(private questionService: QuestionService, private examService: ExamService) {
+    this.createNewPopQuiz();
   }
 
-  private async loadNextQuestion() {
-    const q = await this.questionService.loadNewQuestion(this.questions);
-    this.questions.push(q);
+  private async createNewPopQuiz() {
+    this.exam = await this.examService.createNewExam();
   }
 
   async selectAnswer(answerIndex: number) {
-    this.questions[this.currentQuestionIndex].userAnswer = answerIndex;
-    this.isQuizOver = this.currentQuestionIndex + 1 === environment.numOfQuestions;
-    if(!this.isQuizOver) {
-      await this.loadNextQuestion();
-      this.currentQuestionIndex++;
-    }
+    
+    await this.questionService.answerQuestion(answerIndex);
+
+    this.answeredQuestions = this.exam.questions.filter(q => q.userAnswer >= 1);
+
+    this.isQuizOver = await this.examService.isQuizOver();
   }
 }
