@@ -1,27 +1,20 @@
 import {Injectable} from "@angular/core";
-import {Cell, CellStatus} from "../model/cell";
+import {Cell} from "../entities/Cell";
 import {environment} from "../../environments/environment";
+import { CellStatus } from "../enums/CellStatus";
+import { Guess } from "../entities/Guess";
+import { GameStateService } from "./gamestate.service";
+import { Board } from "../entities/Board";
 
 @Injectable({
   providedIn: "root"
 })
-
 export class PlayerStateService {
 
   constructor() {
   }
 
-  async checkIfPlayerWon(guessNum: number, cells: Cell[]): Promise<boolean> {
-    if(guessNum > environment.maxNumOfGuesses) {
-      return false;
-    }
-
-    for(let i=0; i< environment.wordLength; i++) {
-      if(cells[(guessNum * environment.wordLength) + i].CellStatus !== CellStatus.EXACT) {
-        return false;
-      }
-    }
-
-    return true;
+  async checkIfPlayerWon(board: Board): Promise<boolean> {
+    return !(board.guesses[board.currentGuess].cells.some(cell => cell.status !== CellStatus.EXACT));
   }
 }

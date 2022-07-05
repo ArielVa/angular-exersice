@@ -46,35 +46,38 @@ input {
 }
 
 .cell-area {
-  margin-top: 8px;
+  margin-top: 4px;
   grid-column: 2;
   display: grid;
-  width: 100%;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr ;
-  grid-gap: 4px;
+  grid-template-columns: auto auto 1fr auto auto ;
 }
 
-.cell-area input {
+.cell-area span {
+  grid-column: 3;
+  display: flex;
+}
+
+.cell-area span > input {
   width: 80px;
   height: 80px;
   pointer-events: none;
   font-size: 48px;
   border-radius: 12px;
+  margin: 2px;
 }
 
+
+
 input.wrong {
-  /*background: #ffa600;*/
   color: red;
 }
 
 input.exist {
-  /*background: #ffa600;*/
   color: royalblue;
 }
 
 input.exact {
-  /*background: #aacfe3;*/
   color: #19cc3d;
 }
 

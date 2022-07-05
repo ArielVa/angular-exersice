@@ -1,29 +1,21 @@
 <h2 class="app-title">Wordle Game</h2>
 <h3 [class.hide]="!isGameInLoadingState">{{loadingText}}</h3>
 <div class="input-area">
-  <input #inputGuess
-         type="search"
-         [maxLength]="WORD_LENGTH"
-         [class.loading]="isGameInLoadingState"
-         [disabled]="gameOver || isGameInLoadingState">
-  <button class="btnOk"
-          (click)="playerGuessFlow(inputGuess.value)"
-          [class.loading]="!isGameInLoadingState"
-          [disabled]="gameOver || isGameInLoadingState">OK</button>
+  <input #inputGuess type="search" [maxLength]="WORD_LENGTH" [class.loading]="isGameInLoadingState"
+    [disabled]="gameOver || isGameInLoadingState">
+  <button class="btnOk" (click)="playerGuessFlow(inputGuess.value)" [class.loading]="!isGameInLoadingState"
+    [disabled]="gameOver || isGameInLoadingState">OK</button>
 </div>
-<div class="cell-area">
-  <input *ngFor="let item of cells"
-         [value]="item.CellContent | titlecase"
-         [class.loading]="isGameInLoadingState"
-         [class.wrong]="item.CellStatus === 1"
-         [class.exist]="item.CellStatus === 2"
-         [class.exact]="item.CellStatus === 3"
-  >
+<div class="cell-area" *ngIf="!!board">
+  <span *ngFor="let guess of board.guesses">
+    <input *ngFor="let item of guess.cells" [value]="item.content | titlecase" [class.loading]="isGameInLoadingState"
+      [class.wrong]="item.status === 1" [class.exist]="item.status === 2" [class.exact]="item.status === 3">
+  </span>
+  <!-- <input *ngFor="let item of cells" [value]="item.content | titlecase" [class.loading]="isGameInLoadingState"
+  [class.wrong]="item.status === 1" [class.exist]="item.status === 2" [class.exact]="item.status === 3"> -->
 </div>
 <div class="game-over-area" *ngIf="gameOver">
-    <h1 *ngIf="playerWon">Game Over - You Won</h1>
-    <h1 *ngIf="!playerWon">Game Over - You Lost</h1>
-    <button class="btnPlayAgain"
-            (click)="newGame()"
-    >Play Again</button>
+  <h1 *ngIf="playerWon">Game Over - You Won</h1>
+  <h1 *ngIf="!playerWon">Game Over - You Lost</h1>
+  <button class="btnPlayAgain" (click)="newGame()">Play Again</button>
 </div>
