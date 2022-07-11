@@ -2,80 +2,56 @@ import {Injectable} from '@angular/core';
 import {WORDS} from "../utils/words";
 import {Cell} from "../entities/Cell";
 import {environment} from "../../environments/environment";
-import { CellStatus } from '../enums/CellStatus';
-import { Guess } from '../entities/Guess';
+import {CellStatus} from '../enums/CellStatus';
+import {Guess} from '../entities/Guess';
+import {BehaviorSubject} from "rxjs";
+import {DelayService} from "./delay.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WordService {
 
-  constructor() {
+  allWords: string[] = WORDS;
+  wordToGuess!: string;
+
+  constructor(private delayService: DelayService) {
   }
 
-  async generateRandomWord(): Promise<string> {
-    return new Promise<string>((resolve, rejected) => {
-      setTimeout(() => {
-        resolve(WORDS[Math.floor(Math.random() * WORDS.length)]);
-      }, 1000)
-    });
-  }
+   async generateRandomWordToGuess(): Promise<string> {
+     await this.delayService.delay(1000);
+     this.wordToGuess = WORDS[Math.floor(Math.random() * WORDS.length)];
+     console.log(this.wordToGuess)
+     return this.wordToGuess;
+   }
 
-  async compareWords(s1: string, s2: string):  Promise<Cell[]> {
-    return new Promise<Cell[]>((resolve, rejected) => {
-      setTimeout(() => {
-        const cells: Cell[] = [];
-        if(s1 === s2) {
-          for(let i=0; i<environment.wordLength; i++) {
-
-            cells.push({content: s2[i], status: CellStatus.EXACT})
-          }
-        } else {
-          for(let i=0; i < s1.length; i++) {
-            let cellStatus: CellStatus = CellStatus.WRONG;
-            for(let j=0; j < s2.length; j++) {
-              if(s1[i] === s2[j]) {
-                cellStatus = i === j ? CellStatus.EXACT : CellStatus.EXISTS;
-              }
-            }
-            cells.push({content: s1[i], status: cellStatus})
+  async checkPlayerGuess(playerGuess: string): Promise<Guess> {
+    await this.delayService.delay(200);
+    let guessResult: Guess;
+    if(playerGuess === this.wordToGuess) {
+      guessResult = {
+        cells: Array(environment.wordLength)
+          .fill(0)
+          .map((_, i) => ({
+            content: playerGuess[i],
+            status: CellStatus.EXACT
+          }))
+      }
+    } else {
+      const cells: Cell[] = [];
+      for (let i = 0; i < playerGuess.length; i++) {
+        let status: CellStatus = CellStatus.WRONG;
+        for (let j = 0; j < this.wordToGuess.length; j++) {
+          if (playerGuess[i] === this.wordToGuess[j]) {
+            status = i === j ? CellStatus.EXACT : CellStatus.EXISTS;
+            break;
           }
         }
-        resolve(cells);
-      }, 500)
-    })
+        cells.push({content: playerGuess[i], status: status});
+      }
+      guessResult = {cells: [...cells]};
+    }
+    return guessResult;
   }
 
-  async checkIfPlayerGuessIsCorrect(playerWord: string, correctWord: string): Promise<Guess> {
-    return new Promise<Guess>((resolve, rejected) => {
-      let guessResult: Guess;;
-      setTimeout(() => {
-        if(playerWord === correctWord) {
-          guessResult = {cells: [
-            {content: correctWord[0], status: CellStatus.EXACT},
-            {content: correctWord[1], status: CellStatus.EXACT},
-            {content: correctWord[2], status: CellStatus.EXACT},
-            {content: correctWord[3], status: CellStatus.EXACT},
-            {content: correctWord[4], status: CellStatus.EXACT}
-          ]};
-        } else {
-          const cells: Cell[] = [];
-          for(let i=0; i<playerWord.length; i++) {
-            let status: CellStatus = CellStatus.WRONG;
-            for (let j=0; j<correctWord.length; j++) {
-              if(playerWord[i] === correctWord[j]) {
-                status = i === j ? CellStatus.EXACT : CellStatus.EXISTS;
-                break;
-              }
-            }
-            cells.push({content: playerWord[i], status: status});
-          }
-          guessResult = {cells: [
-           ...cells
-          ]};
-        }
-        resolve(guessResult)
-      }, 500);
-    });
-  }
 }

@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import { Board } from '../entities/Board';
-import { Cell } from '../entities/Cell';
-import { Guess } from '../entities/Guess';
-import { CellStatus } from '../enums/CellStatus';
+import {Board} from '../entities/Board';
+import {CellStatus} from '../enums/CellStatus';
+import {DelayService} from "./delay.service";
+import {Observable, of, Subject} from "rxjs";
+import {Guess} from "../entities/Guess";
 
 
 @Injectable({
@@ -11,31 +12,48 @@ import { CellStatus } from '../enums/CellStatus';
 })
 export class GameStateService {
 
-
   board!: Board;
+  board$: Subject<Board> = new Subject<Board>();
 
-  constructor() {    
+  constructor(private delayService: DelayService) {
   }
 
-  async initBoard (): Promise<Board> {
-    return new Promise<Board>((resolve, rejected) => {
-      setTimeout(() => {
-          this.board = {currentGuess: 0, guesses: Array(environment.maxNumOfGuesses)}
-          for(let i=0; i<environment.maxNumOfGuesses; i++) {
-            let tempGuess: Guess = {cells: []};
-            Array(environment.wordLength).fill(0).forEach((n, i) => {
-              tempGuess.cells.push({content: '', status: CellStatus.EMPTY});
-            })
-      
-            this.board.guesses[i] = tempGuess;
-          }
-         
-          resolve(this.board)
-      }, 100);
-    });
-  } 
+  async createNewGameBoard(): Promise<Observable<Board>> {
+    await this.delayService.delay(1000);
+    this.board = {
+      currentGuess: 0,
+      guesses: Array(environment.maxNumOfGuesses)
+      .fill(0)
+      .map((_) => ({
+        cells: Array(environment.wordLength)
+        .fill(0)
+        .map((_) => ({
+          content: '',
+          status: CellStatus.EMPTY
+        }))
+      }))
+    };
+    this.board$.next(this.board);
+    return this.board$.asObservable()
+  }
 
-  async checkIfGameIsOver(board: Board): Promise<boolean> {
-    return board.currentGuess === environment.maxNumOfGuesses;
+  async addGuessToBoard(guess: Guess): Promise<Board> {
+    await this.delayService.delay(100);
+    this.board.guesses[this.board.currentGuess] = guess;
+    this.board = {
+      currentGuess: this.board.currentGuess + 1,
+      guesses: this.board.guesses
+    }
+    this.board$.next(this.board);
+    console.log(this.board)
+    return this.board
+  }
+
+  async checkIfGameIsOver(): Promise<boolean> {
+    return await this.checkIfPlayerWon() || this.board.currentGuess === environment.maxNumOfGuesses;
+  }
+
+  async checkIfPlayerWon(): Promise<boolean> {
+    return !(this.board.guesses[this.board.currentGuess-1].cells.some(cell => cell.status !== CellStatus.EXACT));
   }
 }

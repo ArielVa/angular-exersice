@@ -7,21 +7,16 @@ import { QuizOverComponent } from './components/quiz-over/quiz-over.component';
 import { SummaryComponent } from './components/summary/summary.component';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		QuestionPresenterComponent,
-		QuizOverComponent,
-		SummaryComponent
-	],
-	imports: [
-		BrowserModule
-	],
-	providers: [],
-  exports: [
+  declarations: [
+    AppComponent,
     QuestionPresenterComponent,
     QuizOverComponent,
     SummaryComponent
   ],
-	bootstrap: [AppComponent]
+  imports: [
+    BrowserModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

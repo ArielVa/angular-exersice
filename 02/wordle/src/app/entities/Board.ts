@@ -4,6 +4,6 @@ import { Guess } from "./Guess";
 
 
 export interface Board {
-    guesses: Guess[]
-    currentGuess: number
+    readonly  guesses: Guess[]
+    readonly  currentGuess: number
 }

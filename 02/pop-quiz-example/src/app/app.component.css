@@ -1,0 +1,19 @@
+.root {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 500px;
+  grid-template-rows: auto 1fr;
+}
+
+.title-area {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+h1 {
+  text-align: center;
+  color: lightseagreen;
+  background: rgba(32, 178, 170, 0.18);
+}

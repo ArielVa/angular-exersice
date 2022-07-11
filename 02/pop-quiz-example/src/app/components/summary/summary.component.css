@@ -1,0 +1,32 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+
+.answer-box {
+  height: 60px;
+  margin: 8px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+
+.answer-box.correct {
+  background: rgba(25, 204, 61, 0.45);
+}
+
+.answer-box.wrong {
+  background: rgba(255, 0, 0, 0.46);
+}
+
+h4 {
+  font-size: 14px;
+  margin: 4px;
+}
+
+p {
+  margin: 4px;
+  font-size: 14px;
+  opacity: 0.65;
+}

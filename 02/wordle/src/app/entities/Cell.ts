@@ -1,6 +1,6 @@
 import { CellStatus } from "../enums/CellStatus";
 
 export interface Cell {
-  status: CellStatus,
-  content: string
+  readonly status: CellStatus,
+  readonly content: string
 }

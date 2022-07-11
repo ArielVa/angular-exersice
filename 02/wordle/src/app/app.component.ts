@@ -1,11 +1,9 @@
-import { Component } from "@angular/core";
-import { CellStatus } from "./enums/CellStatus";
-import { Cell } from "./entities/Cell";
+import {Component, OnInit} from "@angular/core";
 import { GameStateService } from "./service/gamestate.service";
-import { PlayerStateService } from "./service/playerstate.service";
 import { WordService } from "./service/word.service";
-import { Guess } from "./entities/Guess";
 import { Board } from "./entities/Board";
+import {of, Observable, BehaviorSubject, Subject, map, takeLast} from "rxjs";
+import {environment} from "../environments/environment";
 
 
 @Component({
@@ -13,59 +11,49 @@ import { Board } from "./entities/Board";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  wordToGuess: string = '';
+  readonly WORD_LENGTH = environment.wordLength;
 
-  board!: Board;
+  board$!: Observable<Board>
+  loadingText$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  isGameInLoadingState$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  gameOver$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  playerWon$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  loadingText: string = '';
-  isGameInLoadingState: boolean = false;
-  gameOver: boolean = false;
-  playerWon: boolean = false;
-
-  readonly WORD_LENGTH: number = 5;
-  readonly MAX_NUM_OF_GUESSES: number = 6;
-
-  constructor(private wordService: WordService, private gameStateService: GameStateService, private playerStateService: PlayerStateService) {
-    this.newGame() 
+  constructor(private wordService: WordService, private gameStateService: GameStateService) {
   }
 
-  async newGame() {
-    this.board = await this.gameStateService.initBoard();
-    
-    this.isGameInLoadingState = true;
-    this.playerWon = this.gameOver = false;
-   
-    this.loadingText = 'Loading New Game...'
-    await this.setWordToGuess();
-    this.isGameInLoadingState = false;
+  async ngOnInit(): Promise<void> {
+    await this.newGame()
+  }
+
+  async newGame(): Promise<void> {
+    this.isGameInLoadingState$.next(true);
+    this.playerWon$.next(false);
+    this.gameOver$.next(false);
+    this.loadingText$.next('Creating New Game...');
+    this.board$ = (await this.gameStateService.createNewGameBoard()).pipe(
+      takeLast(1)
+    );
+    await this.wordService.generateRandomWordToGuess();
+    this.isGameInLoadingState$.next(false);
     console.log(this);
-  }
-
-  private async setWordToGuess() {
-    this.wordToGuess = await this.wordService.generateRandomWord();
   }
 
   async playerGuessFlow(guess: string) {
-    this.loadingText = "Comparing words..."
-    this.isGameInLoadingState = true;
+    this.loadingText$.next("Comparing words...");
+    this.isGameInLoadingState$.next(true);
+    // this.board$.next(await this.gameStateService.addGuessToBoard(await this.wordService.checkPlayerGuess(guess)));
+    this.playerWon$.next(await this.gameStateService.checkIfPlayerWon());
+    this.gameOver$.next(await this.gameStateService.checkIfGameIsOver());
+    this.isGameInLoadingState$.next(false);
+    // this.board.guesses[this.board.currentGuess] = resCells;
 
-    // const resCells = await this.wordService.compareWords(guess, this.wordToGuess);
-    const resCells = await this.wordService.checkIfPlayerGuessIsCorrect(guess, this.wordToGuess);
-    this.isGameInLoadingState = false;
-  
-    
-    this.board.guesses[this.board.currentGuess] = resCells;
-    
-    this.playerWon = await this.playerStateService.checkIfPlayerWon(this.board);
-    this.board.currentGuess++;
-    const gameState = await this.gameStateService.checkIfGameIsOver(this.board);
-    this.gameOver = this.playerWon || gameState;
+    // this.board.currentGuess++;
+    // this.gameOver = this.playerWon || gameState;
 
-    console.log(this);
-    
+    // console.log(this);
+
   }
-
-  
 }

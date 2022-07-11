@@ -17,15 +17,13 @@ export class ExamService {
 
   async createNewExam(): Promise<Exam> {
     this.exam = {currentQuestion: 0, questions: Array(environment.numOfQuestions)};
-
-    Array(environment.numOfQuestions).fill(0).forEach((n, idx) => {
+    Array(environment.numOfQuestions).fill(0).forEach((_, idx) => {
       let i = Math.floor(Math.random() * this.allQuestions.length);
       while(this.exam.questions.includes(this.allQuestions[i])) {
         i = Math.floor(Math.random() * this.allQuestions.length);
       }
       this.exam.questions[idx] = this.allQuestions[i];
     });
-
     return this.exam;
   }
 
