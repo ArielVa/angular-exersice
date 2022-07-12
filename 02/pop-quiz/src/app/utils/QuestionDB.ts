@@ -57,7 +57,7 @@ export const QUESTIONS_DB = [
       "Italy",
       "Iceland"
     ],
-    "correct": 3
+    "correct": 1
   },
   {
     "caption": "Where was the first example of paper money used?",

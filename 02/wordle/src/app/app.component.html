@@ -1,15 +1,20 @@
 <h2 class="app-title">Wordle Game</h2>
 <h3 [class.hide]="!(isGameInLoadingState$ | async)">{{loadingText$ | async}}</h3>
+
 <div class="input-area">
   <input #inputGuess type="search" [maxLength]="WORD_LENGTH" [class.loading]="(isGameInLoadingState$ | async)"
     [disabled]="(gameOver$ | async) || (isGameInLoadingState$ | async)">
-  <button class="btnOk" (click)="playerGuessFlow(inputGuess.value)" [class.loading]="!(isGameInLoadingState$ | async)"
+  <!-- <button class="btnOk" (click)="playerGuessFlow(inputGuess.value)" [class.loading]="!(isGameInLoadingState$ | async)"
+    [disabled]="(gameOver$ | async) || (isGameInLoadingState$ | async)">OK</button> -->
+  <button class="btnOk" (click)="playerGuessWord$.next(inputGuess.value)"
+    [class.loading]="!(isGameInLoadingState$ | async)"
     [disabled]="(gameOver$ | async) || (isGameInLoadingState$ | async)">OK</button>
 </div>
 <div class="cell-area">
   <span *ngFor="let guess of (board$ | async)?.guesses">
-    <input *ngFor="let item of guess?.cells" [value]="item?.content | titlecase" [class.loading]="(isGameInLoadingState$ | async)"
-           [class.wrong]="item.status === 1" [class.exist]="item.status === 2" [class.exact]="item.status === 3">
+    <input *ngFor="let item of guess?.cells" [value]="item?.content | titlecase"
+      [class.loading]="(isGameInLoadingState$ | async)" [class.wrong]="item.status === 1"
+      [class.exist]="item.status === 2" [class.exact]="item.status === 3">
 
   </span>
 </div>

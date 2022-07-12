@@ -18,7 +18,7 @@ export class GameStateService {
   constructor(private delayService: DelayService) {
   }
 
-  async createNewGameBoard(): Promise<Observable<Board>> {
+  async createNewGameBoard(): Promise<Board> {
     await this.delayService.delay(1000);
     this.board = {
       currentGuess: 0,
@@ -34,7 +34,7 @@ export class GameStateService {
       }))
     };
     this.board$.next(this.board);
-    return this.board$.asObservable()
+    return this.board;
   }
 
   async addGuessToBoard(guess: Guess): Promise<Board> {
@@ -45,7 +45,6 @@ export class GameStateService {
       guesses: this.board.guesses
     }
     this.board$.next(this.board);
-    console.log(this.board)
     return this.board
   }
 
@@ -56,4 +55,13 @@ export class GameStateService {
   async checkIfPlayerWon(): Promise<boolean> {
     return !(this.board.guesses[this.board.currentGuess-1].cells.some(cell => cell.status !== CellStatus.EXACT));
   }
+
+  getBoard() {
+    return this.board;
+  }
+
+  getBoardObs() {
+    return this.board$.asObservable();
+  }
+
 }
