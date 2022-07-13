@@ -27,8 +27,8 @@ export class AppComponent {
   }
 
   async selectAnswer(answerIndex: number) {
-    
-    await this.questionService.answerQuestion(answerIndex);
+
+    this.exam = await this.examService.insertAnsweredQuestion(await this.questionService.answerQuestion(answerIndex));
 
     this.answeredQuestions = this.exam.questions.filter(q => q.userAnswer >= 1);
 
