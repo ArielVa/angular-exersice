@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {BehaviorSubject, first, last, map, Observable, startWith, switchAll, take, withLatestFrom} from 'rxjs';
-import {Board} from './entities/Board';
+import {BehaviorSubject, first, last, map, merge, Observable, startWith, switchAll, take, withLatestFrom} from 'rxjs';
+import {Board} from './entities/board';
 import {GameService} from './services/game.service';
 import {WordService} from "./services/word.service";
 
@@ -17,40 +17,37 @@ export class AppComponent implements OnInit
 
   playerWon$!: Observable<boolean>;
   gameOver$!: Observable<boolean>;
-
+  trueGameOver$!: Observable<boolean>
 
   constructor(private gameService: GameService, private wordService: WordService){}
 
   ngOnInit() {
+
     this.newGame()
+
+    this.board$ = this.gameService.getGameStateObs().pipe(
+      map(gs => gs.board)
+    );
+
+    this.playerWon$ = this.gameService.getGameStateObs().pipe(
+      map(gs => {
+        console.log(gs)
+        return gs.hasPlayerWon
+      })
+    );
+
+    this.gameOver$ = this.gameService.getGameStateObs().pipe(
+      map(gs => gs.isGameOver || gs.hasPlayerWon)
+    );
+
   }
 
-    newGame() {
-      this.wordService.generateRandomWordToGuess();
-      this.gameService.createNewEmptyBoard();
+  addGuess(value: string) {
+    this.gameService.addGuessToBoard(this.wordService.checkPlayerGuess(value));
+  }
 
-      this.board$ = this.guessWord$.pipe(
-        map(playerGuessWord => {
-          console.log("step 1")
-          return this.gameService.addGuessToBoard(this.wordService.checkPlayerGuess(playerGuessWord));
-        }),
-        switchAll()
-      );
-
-
-      this.gameOver$ = this.guessWord$.pipe(
-        map((_) => {
-          console.log("step 2")
-          return this.gameService.checkIfGameIsOver();
-        }),
-      );
-
-      this.playerWon$ = this.guessWord$.pipe(
-        first(),
-        map(_ => {
-          console.log("step 5")
-          return this.gameService.checkIfPlayerWon();
-        }),
-      );
-    }
+  newGame() {
+    this.wordService.generateRandomWordToGuess();
+    this.gameService.createNewBoard();
+  }
 }

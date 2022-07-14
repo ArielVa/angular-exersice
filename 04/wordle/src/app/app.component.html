@@ -2,23 +2,20 @@
 <h1 class="title">Wordle Game</h1>
 <div class="component-body" *ngIf="{
     gameOver: gameOver$ | async,
-    playerWon: playerWon$ | async
+    playerWon: playerWon$ | async,
+    board: board$ | async
   } as myObservables">
-
   <div class="area-title">
     <input  #inputValue type="search" [maxLength]="5"
             class="input-guess" [disabled]="(myObservables.gameOver)">
-    <button class="btnOk" (click)="guessWord$.next(inputValue.value)" [disabled]="(myObservables.gameOver)"
+    <button class="btnOk" (click)="addGuess(inputValue.value)" [disabled]="(myObservables.gameOver)"
     >OK</button>
   </div>
+
   <div class="area-board">
-    <div *ngFor="let guess of (board$ | async)?.guesses;">
-      <div *ngFor="let cell of guess.cells;"
-           class="cell"
-           [class.wrong] = "cell.status === 1"
-           [class.exist] = "cell.status === 2"
-           [class.exact] = "cell.status === 3">
-        {{cell.content | titlecase}}
+    <div *ngFor="let guess of myObservables.board?.guesses">
+      <div *ngFor="let cell of guess.cells;">
+        <app-content-cell [cell]="cell"></app-content-cell>
       </div>
     </div>
   </div>

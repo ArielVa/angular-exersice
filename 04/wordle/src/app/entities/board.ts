@@ -1,4 +1,4 @@
-import { Guess } from "./Guess";
+import { Guess } from "./guess";
 
 export interface Board {
     readonly  guesses: Guess[]

@@ -1,55 +1,55 @@
-import { Injectable } from '@angular/core';
-import { Board } from '../entities/Board';
-import { CellStatus } from '../entities/CellStatus';
-import { DelayService } from './delay.service';
-import { Guess } from '../entities/Guess';
-import {Observable, of, Subject} from "rxjs";
+import {Injectable} from '@angular/core';
+import {CellStatus} from '../entities/cell-status';
+import {DelayService} from './delay.service';
+import {Guess} from '../entities/guess';
+import {BehaviorSubject, Observable} from "rxjs";
+import {GameState, initialGameState} from "../entities/game-state";
+
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  board!: Board;
-  board$ = new Subject<Board>();
+  gameState: GameState = initialGameState();
+  gameState$ = new BehaviorSubject<GameState>(this.gameState);
 
-  constructor(private delayService: DelayService) { }
+  constructor(private delayService: DelayService) {
+  }
 
-  createNewEmptyBoard(): Observable<Board> {
-    this.board = {
-      currentGuess: -1,
-      guesses: Array(6)
-      .fill(0)
-      .map(_ => ({
-        cells: Array(5)
-        .fill(0)
-        .map(_ => ({
-          content: '',
-          status: CellStatus.EMPTY
-        }))
-      }))
+  private updateGameStateBehaviourSubject(gameState: GameState) {
+    this.gameState = gameState;
+    this.gameState$.next(this.gameState);
+  }
+
+  getGameStateObs(): Observable<GameState> {
+    return this.gameState$.asObservable();
+  }
+
+  createNewBoard(): void {
+    this.updateGameStateBehaviourSubject(initialGameState())
+  }
+
+  private checkIfGameOver(): boolean {
+    return this.gameState.board.currentGuess + 1 === 6;
+  }
+
+  private checkIfPlayerWon(): boolean {
+    return !this.gameState.board.guesses[this.gameState.board.currentGuess].cells.some(cell => cell.status !== CellStatus.EXACT);
+  }
+
+  addGuessToBoard(guess: Guess): void {
+    const board = this.gameState.board;
+    board.guesses[board.currentGuess] = guess;
+    this.gameState = {
+      board: {
+        guesses: board.guesses,
+        currentGuess: board.currentGuess + 1
+      },
+      isGameOver: this.checkIfGameOver(),
+      hasPlayerWon: this.checkIfPlayerWon()
     };
-    this.board$.next(this.board);
-    return of(this.board);
+    this.gameState$.next(this.gameState);
   }
 
-  addGuessToBoard(guess: Guess): Observable<Board> {
-    this.board.guesses[this.board.currentGuess] = guess;
-    this.board = {
-      currentGuess: this.board.currentGuess + 1,
-      guesses: this.board.guesses
-    }
-    this.board$.next(this.board);
-    return of(this.board);
-  }
 
-  checkIfGameIsOver(): boolean {
-    console.log("step 3")
-    return (this.checkIfPlayerWon() || this.board.currentGuess >= 5);
-  }
-
-  checkIfPlayerWon(): boolean {
-    if(this.board.currentGuess < 0) return false;
-    console.log("step 4")
-    return !(this.board.guesses[this.board.currentGuess-1].cells.some(cell => cell.status !== CellStatus.EXACT));
-  }
 }

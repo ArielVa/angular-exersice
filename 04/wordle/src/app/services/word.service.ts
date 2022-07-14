@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {DelayService} from "./delay.service";
 import {WORDS} from "../utils/words";
-import {Guess} from "../entities/Guess";
+import {Guess} from "../entities/guess";
 import {environment} from "../../environments/environment";
-import {CellStatus} from "../entities/CellStatus";
-import {Cell} from "../entities/Cell";
+import {CellStatus} from "../entities/cell-status";
+import {Cell} from "../entities/cell";
 
 @Injectable({
   providedIn: 'root'

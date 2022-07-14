@@ -1,0 +1,5 @@
+<div [class.wrong] = "cell.status === 1"
+     [class.exist] = "cell.status === 2"
+     [class.exact] = "cell.status === 3">
+  {{cell.content | titlecase}}
+</div>
