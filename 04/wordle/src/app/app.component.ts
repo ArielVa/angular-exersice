@@ -31,7 +31,6 @@ export class AppComponent implements OnInit
 
     this.playerWon$ = this.gameService.getGameStateObs().pipe(
       map(gs => {
-        console.log(gs)
         return gs.hasPlayerWon
       })
     );
