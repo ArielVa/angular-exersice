@@ -1,0 +1,12 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  border: 4px solid #29ceaf;
+  border-radius: 8px;
+}
+
+h1 {
+  border-bottom: #3e638d 1px solid;
+}

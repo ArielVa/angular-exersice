@@ -1,0 +1,10 @@
+:host {
+  text-align: center;
+  margin: 4px;
+  border: 2px solid black;
+  border-radius: 8px;
+  font-size: 22px;
+  color: crimson;
+  grid-column: 1 / -1;
+}
+

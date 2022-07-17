@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  justify-content: center;
+  border: 4px rgba(0, 0, 255, 0.37) solid;
+  border-radius: 8px;
+  height: 100%;
+}
+
+li {
+  list-style: none;
+  margin: 8px;
+  padding: 4px;
+  border: solid 2px #0e57a9;
+  border-radius: 4px;
+  cursor: pointer;
+  background: rgba(43, 218, 30, 0.83);
+}
+
+li:hover {
+  background: rgb(33, 131, 26)
+}

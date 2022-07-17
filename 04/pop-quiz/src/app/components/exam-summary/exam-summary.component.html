@@ -1,0 +1,8 @@
+
+<h1>Quiz Summary</h1>
+<h5 *ngFor="let question of (questions$ | async); let i = index"
+    [class.wrong]="question.userAnswer !== question.correct"
+    [class.correct]="question.userAnswer === question.correct">
+  {{i+1}}. {{question.caption}}
+</h5>
+

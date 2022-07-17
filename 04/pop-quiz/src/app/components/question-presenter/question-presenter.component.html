@@ -1,0 +1,6 @@
+<div>
+  <h2>{{questionNumber}}. {{question!.caption}}</h2>
+  <ul>
+    <li *ngFor="let answer of question!.answers" (click)="answerChosen(question!.answers.indexOf(answer)+1)">{{answer}}</li>
+  </ul>
+</div>
