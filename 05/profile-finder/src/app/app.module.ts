@@ -9,6 +9,7 @@ import { ProfileListComponent } from './components/profile-list/profile-list.com
 import { ProfileDetailsComponent } from './components/profile-details/profile-details.component';
 import { HomeComponent } from './components/home/home.component';
 import { AccountComponent } from './components/account/account.component';
+import { ProfileSearchComponent } from './components/profile-search/profile-search.component';
 
 @NgModule({
   declarations: [
@@ -17,14 +18,11 @@ import { AccountComponent } from './components/account/account.component';
     ProfileListComponent,
     ProfileDetailsComponent,
     HomeComponent,
-    AccountComponent
+    AccountComponent,
+    ProfileSearchComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
