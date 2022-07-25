@@ -1,3 +1,5 @@
 # Project exclude paths
 /01/pop-quiz/node_modules/
 /01/wordle/node_modules/
+/05/common-server/node_modules/
+/05/profile-finder/node_modules/
