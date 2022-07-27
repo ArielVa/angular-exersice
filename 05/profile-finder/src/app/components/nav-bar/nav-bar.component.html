@@ -3,5 +3,6 @@
   <a routerLink="profiles" routerLinkActive="activeLink">PROFILES</a>
   <a routerLink="search" routerLinkActive="activeLink">SEARCH</a>
   <div class="separator"></div>
+  <h5>{{accountStatusText$ | async | uppercase}}</h5>
   <a routerLink="account" routerLinkActive="activeLink" class="account">ACCOUNT</a>
 </nav>

@@ -12,9 +12,17 @@ nav {
     flex-grow: 1;
 }
 
-nav * {
-  padding: 8px 12px;
-  border-left: 2px solid rgba(0, 0, 0, 0.55);
+nav a, h5 {
+    padding: 8px 12px;
+    border-left: 2px solid rgba(0, 0, 0, 0.55);
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    color:black;
+}
+
+nav h5 {
+    color: white;
 }
 
 nav a:hover {
@@ -28,9 +36,3 @@ a.activeLink {
   color: navajowhite;
 }
 
-a {
-    text-decoration: none;
-    font-size: 24px;
-    font-weight: bold;
-    color:black;
-}

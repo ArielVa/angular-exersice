@@ -1,15 +1,17 @@
 :host {
   display: flex;
   flex-flow: column;
+  padding: 12px;
 }
-div {
+
+div.name-scanner {
   padding: 24px 0;
   align-self: center;
   display: flex;
   flex-flow: column;
 }
 
-div * {
+div.name-scanner * {
   align-self: center;
 }
 
@@ -20,4 +22,13 @@ input {
   height: 36px;
   font-size: 24px;
   align-self: center;
+}
+
+.profile-result-display {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.profile-results {
+  padding: 0 12px;
 }

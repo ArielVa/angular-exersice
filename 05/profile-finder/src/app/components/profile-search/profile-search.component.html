@@ -1,4 +1,12 @@
-<div>
+<div class="name-scanner">
   <h2>Search for profiles by name</h2>
-  <input #inputPrefix >
+  <input #inputPrefix (input)="nameToSearch$.next(inputPrefix.value)">
 </div>
+
+<ng-container *ngIf="(profiles$ | async)as profiles">
+  <div class="profile-result-display">
+    <div *ngFor="let profile of profiles" class="profile-results">
+      {{profile.name.first}}
+    </div>
+  </div>
+</ng-container>

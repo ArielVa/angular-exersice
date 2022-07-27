@@ -19,4 +19,10 @@ export class ProfileService {
     return firstValueFrom(this.http.get<Profile>(environment.baseUrl + "/" + id));
   }
 
+  async searchByName(name: string): Promise<Profile[]> {
+    const allProfiles: Profile[] = await this.getAllProfiles();
+
+    return allProfiles.filter(p => p.name.first.includes(name));
+  }
+
 }
