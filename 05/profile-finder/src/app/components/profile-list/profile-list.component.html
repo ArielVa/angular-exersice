@@ -1,12 +1,11 @@
 <ng-container *ngIf="(profiles$ | async) as profiles">
-  <div *ngFor="let profile of profiles; let i = index" class="profile-displayer">
-    <h2>{{i+1}}. {{profile.name.title}} {{profile.name.first}} {{profile.name.last}},</h2>
-    <h3>{{profile.gender | titlecase}} </h3>
+  <div *ngFor="let profile of profiles; let i = index" class="profile-displayer" (click)="openProfileDetails(i)">
+    <h2>{{profile.id}}. {{profile.name.title}} {{profile.name.first}} {{profile.name.last}},</h2>
+    <h3 [class.male]="profile.gender === 'male'" [class.female]="profile.gender === 'female'">{{profile.gender | titlecase}} </h3>
     <h4>{{profile.location.country}}</h4>
     <h4>{{profile.location.state}}</h4>
     <h4>{{profile.location.city}}</h4>
     <h4>{{profile.location.street.name}} {{profile.location.street.number}}</h4>
     <h4>{{profile.location.postcode}}</h4>
-
   </div>
 </ng-container>

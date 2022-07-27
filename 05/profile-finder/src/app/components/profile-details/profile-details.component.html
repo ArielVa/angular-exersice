@@ -1,1 +1,16 @@
-<p>profile-details works!</p>
+<ng-container *ngIf="(profile$ | async) as profile">
+  <div class="profile-display">
+    <div>
+        <h1>{{profile.name.title}} {{profile.name.first}} {{profile.name.last}},</h1>
+        <h2 [class.male]="profile.gender === 'male'" [class.female]="profile.gender === 'female'">{{profile.gender | titlecase}} </h2>
+        <h3>{{profile.location.country}}</h3>
+        <h3>{{profile.location.state}}</h3>
+        <h3>{{profile.location.city}}</h3>
+        <h3>{{profile.location.street.name}} {{profile.location.street.number}}</h3>
+        <h3>{{profile.location.postcode}}</h3>
+      </div>
+      <div class="buttons">
+        <button (click)="returnToProfiles()">Back To Profiles</button>
+      </div>
+    </div>
+</ng-container>

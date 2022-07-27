@@ -9,14 +9,14 @@ import { Profile } from '../models/profile.model';
 })
 export class ProfileService {
 
-  url: string = environment.baseUrl;
-  profiles!: Profile[];
-  profiles$ = new Subject<Profile[]>();
-
   constructor(private http: HttpClient) { }
 
   async getAllProfiles(): Promise<Profile[]> {
-    return firstValueFrom(this.http.get<Profile[]>(this.url));
+    return firstValueFrom(this.http.get<Profile[]>(environment.baseUrl));
+  }
+
+  async getProfile(id: number) : Promise<Profile> {
+    return firstValueFrom(this.http.get<Profile>(environment.baseUrl + "/" + id));
   }
 
 }
