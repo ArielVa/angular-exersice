@@ -1,6 +1,7 @@
 {
   "results": [
     {
+      "id": 1,
       "gender": "male",
       "name": {
         "title": "Mr",
@@ -45,10 +46,7 @@
       },
       "phone": "84376386",
       "cell": "58520945",
-      "id": {
-        "name": "CPR",
-        "value": "220458-2953"
-      },
+
       "picture": {
         "large": "https://randomuser.me/api/portraits/men/94.jpg",
         "medium": "https://randomuser.me/api/portraits/med/men/94.jpg",
@@ -57,6 +55,7 @@
       "nat": "DK"
     },
     {
+      "id": 2,
       "gender": "male",
       "name": {
         "title": "Mr",
@@ -101,10 +100,6 @@
       },
       "phone": "(049) 5038022",
       "cell": "(06) 54713735",
-      "id": {
-        "name": "BSN",
-        "value": "29436116"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/men/22.jpg",
         "medium": "https://randomuser.me/api/portraits/med/men/22.jpg",
@@ -113,6 +108,7 @@
       "nat": "NL"
     },
     {
+      "id": 3,
       "gender": "female",
       "name": {
         "title": "Miss",
@@ -157,10 +153,6 @@
       },
       "phone": "0456-6497433",
       "cell": "0170-1245199",
-      "id": {
-        "name": "SVNR",
-        "value": "47 160767 D 696"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/women/86.jpg",
         "medium": "https://randomuser.me/api/portraits/med/women/86.jpg",
@@ -169,6 +161,7 @@
       "nat": "DE"
     },
     {
+      "id": 44,
       "gender": "male",
       "name": {
         "title": "Mr",
@@ -213,10 +206,6 @@
       },
       "phone": "041-575-9817",
       "cell": "081-582-4130",
-      "id": {
-        "name": "PPS",
-        "value": "1502232T"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/men/72.jpg",
         "medium": "https://randomuser.me/api/portraits/med/men/72.jpg",
@@ -225,6 +214,7 @@
       "nat": "IE"
     },
     {
+      "id": 5,
       "gender": "female",
       "name": {
         "title": "Miss",
@@ -269,10 +259,6 @@
       },
       "phone": "(0486) 141064",
       "cell": "(06) 26396336",
-      "id": {
-        "name": "BSN",
-        "value": "56897056"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/women/58.jpg",
         "medium": "https://randomuser.me/api/portraits/med/women/58.jpg",
@@ -281,6 +267,7 @@
       "nat": "NL"
     },
     {
+      "id": 6,
       "gender": "male",
       "name": {
         "title": "Mr",
@@ -325,10 +312,6 @@
       },
       "phone": "04850365",
       "cell": "60570641",
-      "id": {
-        "name": "CPR",
-        "value": "060268-0732"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/men/57.jpg",
         "medium": "https://randomuser.me/api/portraits/med/men/57.jpg",
@@ -337,6 +320,7 @@
       "nat": "DK"
     },
     {
+      "id": 7,
       "gender": "male",
       "name": {
         "title": "Mr",
@@ -381,10 +365,6 @@
       },
       "phone": "02-445-727",
       "cell": "044-492-91-42",
-      "id": {
-        "name": "HETU",
-        "value": "NaNNA303undefined"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/men/75.jpg",
         "medium": "https://randomuser.me/api/portraits/med/men/75.jpg",
@@ -393,6 +373,7 @@
       "nat": "FI"
     },
     {
+      "id": 8,
       "gender": "male",
       "name": {
         "title": "Mr",
@@ -437,10 +418,6 @@
       },
       "phone": "04-7818-6744",
       "cell": "0497-764-496",
-      "id": {
-        "name": "TFN",
-        "value": "176090786"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/men/25.jpg",
         "medium": "https://randomuser.me/api/portraits/med/men/25.jpg",
@@ -449,6 +426,7 @@
       "nat": "AU"
     },
     {
+      "id": 9,
       "gender": "male",
       "name": {
         "title": "Mr",
@@ -493,10 +471,6 @@
       },
       "phone": "0929-6503918",
       "cell": "0178-3478201",
-      "id": {
-        "name": "SVNR",
-        "value": "70 251281 K 406"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/men/51.jpg",
         "medium": "https://randomuser.me/api/portraits/med/men/51.jpg",
@@ -505,6 +479,7 @@
       "nat": "DE"
     },
     {
+      "id": 10,
       "gender": "female",
       "name": {
         "title": "Miss",
@@ -549,10 +524,6 @@
       },
       "phone": "(636) 644-0625",
       "cell": "(974) 422-3619",
-      "id": {
-        "name": "SSN",
-        "value": "360-63-7774"
-      },
       "picture": {
         "large": "https://randomuser.me/api/portraits/women/28.jpg",
         "medium": "https://randomuser.me/api/portraits/med/women/28.jpg",
