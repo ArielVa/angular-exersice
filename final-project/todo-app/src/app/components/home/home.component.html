@@ -1,0 +1,22 @@
+<div class="main-area">
+  <h1>Welcome To Your Todo's App</h1>
+  <h2>Here Is Everything You Can Do:</h2>
+  <div class="actions-area">
+    <button>Create New List</button>
+    <button>View All Lists</button>
+    <button>View All Items</button>
+  </div>
+</div>
+<ng-container *ngIf="{
+  numTodoLists: numTodoLists$ | async,
+  numItems: numItems$ | async,
+  numActiveItems: numActiveItems$ | async
+} as myObs">
+  <div class="stats-area">
+    <span class="compactor"></span>
+    <app-stat-display icon="list" [num]="myObs.numTodoLists!" text="Lists"></app-stat-display>
+    <app-stat-display icon="filter_none" [num]="myObs.numItems!" text="Todo Items"></app-stat-display>
+    <app-stat-display icon="hourglass_empty" [num]="myObs.numActiveItems!" text="Active Items"></app-stat-display>
+    <span class="compactor"></span>
+  </div>
+</ng-container>

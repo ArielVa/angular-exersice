@@ -1,6 +1,7 @@
 export interface TodoList {
     readonly id: number;
     readonly caption: string;
-    readonly listId: number;
-    readonly isCompleted: boolean;
+    readonly description: string;
+    readonly imageUrl: string;
+    readonly color: string;
 }
