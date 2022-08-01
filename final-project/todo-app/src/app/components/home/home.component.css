@@ -7,6 +7,7 @@
     margin-top: 4px;
 }
 .main-area {
+    border: 2px dotted black;
     color: rgb(248, 246, 246);
     background-color: rgb(136, 83, 221);
     min-height: 200px;
