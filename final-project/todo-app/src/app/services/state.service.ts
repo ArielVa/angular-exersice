@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, filter } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { AppState, InitialAppState } from '../models/app-state.model';
 import { TodoItem } from '../models/todo-item.model';
 import { TodoList } from '../models/todo-list.model';
@@ -63,7 +63,8 @@ export class StateService {
       ...this.appState,
       todoLists: this.appState.todoLists.map(todoList => todoList.id === list.id ? list : todoList)
     }
-
+    console.log(list)
+    console.log(this.appState)
     this.appState$.next(this.appState);
   }
 

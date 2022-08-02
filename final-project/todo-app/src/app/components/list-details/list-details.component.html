@@ -4,6 +4,7 @@
   selectedColor: selectedColor$ | async,
   selectedIcon: selectedIcon$ | async
 } as myObs">
+  action = {{!!myObs.action}}
   <div class="list-details-form" [formGroup]="todoListFrom">
     <div class="form-area">
       <div *ngIf="getControlByFieldName('caption') as field">
@@ -26,7 +27,7 @@
             <mat-icon [style.color]="myObs.selectedColor">{{myObs.selectedIcon}}</mat-icon>
           </mat-select-trigger>
           <mat-option *ngFor="let icon of icons" [value]="icon" (click)="selectedIcon$.next(icon)">
-            <mat-icon [style.color]="myObs.selectedColor">{{icon}}</mat-icon>
+            <mat-icon [style.color]="myObs.selectedColor" >{{icon}}</mat-icon>
           </mat-option>
         </mat-select>
       </div>
@@ -50,6 +51,8 @@
     </div>
   </div>
 </ng-container>
+something needs to be here
+<ng-container *ngIf="todoList$ | async as tl">
+  {{tl | json}}
+</ng-container>
 
-{{todoListFrom.value | json}}
-{{todoListFrom.errors | json}}
