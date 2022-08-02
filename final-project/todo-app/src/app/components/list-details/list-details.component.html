@@ -6,39 +6,50 @@
 } as myObs">
   <div class="list-details-form" [formGroup]="todoListFrom">
     <div class="form-area">
-      <h4>Caption</h4>
-      <input [formControl]="getControlByFieldName('caption')">
+      <div *ngIf="getControlByFieldName('caption') as field">
+        <h4>Caption</h4>
+        <input [formControl]="field">
+        <app-form-error-display *ngIf="!field.pristine && field.errors" [errors]="field.errors"></app-form-error-display>
 
-      <h4>Description</h4>
-      <textarea [formControl]="getControlByFieldName('description')"></textarea>
+      </div>
 
-      <h4>Icon:</h4>
-      <mat-select>
-        <mat-select-trigger>
-          <mat-icon [style.color]="myObs.selectedColor">{{myObs.selectedIcon}}</mat-icon>
-        </mat-select-trigger>
-        <mat-option *ngFor="let icon of icons" [value]="icon" (click)="selectedIcon$.next(icon)">
-          <mat-icon [style.color]="myObs.selectedColor">{{icon}}</mat-icon>
-        </mat-option>
-      </mat-select>
+      <div *ngIf="getControlByFieldName('description') as field">
+        <h4>Description</h4>
+        <textarea [formControl]="field"></textarea>
+        <app-form-error-display *ngIf="!field.pristine && field.errors" [errors]="field.errors"></app-form-error-display>
+      </div>
 
-      <h4>Color:</h4>
-      <select #colorSelector [style.color]="myObs.selectedColor" (change)="selectedColor$.next(colorSelector.value)">
-        <option *ngFor="let color of colorOptions"
-                [value]="color"
-                [style.color]="color"
-        >{{color}}</option>
-      </select>
+      <div>
+        <h4>Icon:</h4>
+        <mat-select [formControl]="getControlByFieldName('icon')">
+          <mat-select-trigger>
+            <mat-icon [style.color]="myObs.selectedColor">{{myObs.selectedIcon}}</mat-icon>
+          </mat-select-trigger>
+          <mat-option *ngFor="let icon of icons" [value]="icon" (click)="selectedIcon$.next(icon)">
+            <mat-icon [style.color]="myObs.selectedColor">{{icon}}</mat-icon>
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <div>
+        <h4>Color:</h4>
+        <select #colorSelector
+                [formControl]="getControlByFieldName('color')"
+                [style.color]="myObs.selectedColor"
+                (change)="selectedColor$.next(colorSelector.value)">
+          <option *ngFor="let color of colorOptions"
+                  [value]="color"
+                  [style.color]="color"
+          >{{color}}</option>
+        </select>
+      </div>
+
       <div class="form-save-area">
-        <span class="compactor"></span>
-        <button class="inactive">Save</button>
+        <button [disabled]="!todoListFrom.valid" (click)="saveTodoList()">Save</button>
       </div>
     </div>
   </div>
 </ng-container>
-<mat-menu #appMenu="matMenu">
-  <ng-template matMenuContent>
-    <button mat-menu-item>Settings</button>
-    <button mat-menu-item>Help</button>
-  </ng-template>
-</mat-menu>
+
+{{todoListFrom.value | json}}
+{{todoListFrom.errors | json}}

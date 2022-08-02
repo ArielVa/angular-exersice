@@ -15,7 +15,7 @@ import { ListDetailsComponent } from './components/list-details/list-details.com
 import {MatSelectModule} from "@angular/material/select";
 import {MatMenuModule} from "@angular/material/menu";
 import {ReactiveFormsModule} from "@angular/forms";
-import { FormErrorDisplayerComponent } from './components/form-error-displayer/form-error-displayer.component';
+import { FormErrorDisplayComponent } from './components/form-error-display/form-error-display.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { FormErrorDisplayerComponent } from './components/form-error-displayer/f
     TitleComponent,
     StatDisplayComponent,
     ListDetailsComponent,
-    FormErrorDisplayerComponent
+    FormErrorDisplayComponent
   ],
   imports: [
     BrowserModule,

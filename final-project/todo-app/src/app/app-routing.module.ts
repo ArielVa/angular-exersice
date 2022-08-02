@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ItemsDetailsComponent } from './components/items-details/items-details.component';
 import { ListsDetailsComponent } from './components/lists-details/lists-details.component';
-import {AddTodoListComponent} from "./components/add-todo-list/add-todo-list.component";
 import {TodoListEditorGuard} from "./guards/todo-list-editor.guard";
 import {ListDetailsComponent} from "./components/list-details/list-details.component";
 

@@ -21,14 +21,10 @@ h2 {
   border: 2px solid black;
   border-radius: 6px;
 }
-
-.form-area {
-  padding: 8px 16px;
-}
-
-.form-area :nth-child(2n) {
-  padding: 8px 0;
-  margin-bottom: 16px;
+.form-area > div {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
 }
 
 input, textarea, select, mat-select {
@@ -36,6 +32,7 @@ input, textarea, select, mat-select {
   border: 1px solid black;
   border-radius: 4px;
   background-color: white;
+  min-height: 30px;
 }
 
 input:focus, textarea:focus{
@@ -51,27 +48,28 @@ textarea {
   display: flex;
   flex-direction: row;
 }
-
-.form-save-area .compactor {
-  flex-grow: 1;
-}
-
 .form-save-area button {
   width: 120px;
+  height: 45px;
   background-color: #53b6dc;
   color: #eaeae4;
   font-size: 16px;
   border-radius: 8px;
+  align-self: flex-end;
 }
 
-.form-save-area button:hover {
+.form-save-area button:disabled {
+  opacity: 0.5;
+}
+
+.form-save-area button:hover:not([disabled]) {
   cursor: pointer;
   background-color: #64cdff;
 }
 
 mat-select:hover, select:hover {
   cursor: pointer;
-  background-color: #a4a8a8;
+  background-color: #e7dddd;
 }
 
 mat-select mat-select-trigger mat-icon {
@@ -82,7 +80,7 @@ mat-icon {
   font-size: 36px;
 }
 
-input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid {
+:not(.list-details-form).ng-touched.ng-invalid {
   border: 1px solid crimson;
   background: #eed3d3;
 }
