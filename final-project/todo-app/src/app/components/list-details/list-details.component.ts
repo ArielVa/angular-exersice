@@ -14,7 +14,7 @@ import {AppUrls} from "../../app-routing.module";
 export class ListDetailsComponent implements OnInit {
 
   colorOptions: string[] = [
-    'red', 'green', 'blue', 'yellow', 'pink', 'purple'
+    'red', 'green', 'blue', 'yellow', 'pink', 'purple', 'teal', 'azure'
   ]
   selectedColor$ = new BehaviorSubject(this.colorOptions[0]);
 
@@ -112,9 +112,6 @@ export class ListDetailsComponent implements OnInit {
       console.log("save")
       const n = await this.stateService.AddList(this.todoListFrom.value.caption, this.todoListFrom.value.description, this.todoListFrom.value.color, this.todoListFrom.value.icon)
     }
-
-
-
     await this.router.navigate([AppUrls().home])
   }
 }

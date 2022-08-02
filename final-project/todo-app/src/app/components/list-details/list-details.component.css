@@ -72,6 +72,10 @@ mat-select:hover, select:hover {
   background-color: #e7dddd;
 }
 
+option {
+  background: #9d9c9c;
+}
+
 mat-select mat-select-trigger mat-icon {
   padding: 24px 0;
 }

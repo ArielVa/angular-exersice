@@ -4,7 +4,6 @@
   selectedColor: selectedColor$ | async,
   selectedIcon: selectedIcon$ | async
 } as myObs">
-  action = {{!!myObs.action}}
   <div class="list-details-form" [formGroup]="todoListFrom">
     <div class="form-area">
       <div *ngIf="getControlByFieldName('caption') as field">
@@ -41,6 +40,7 @@
           <option *ngFor="let color of colorOptions"
                   [value]="color"
                   [style.color]="color"
+
           >{{color}}</option>
         </select>
       </div>
@@ -51,8 +51,3 @@
     </div>
   </div>
 </ng-container>
-something needs to be here
-<ng-container *ngIf="todoList$ | async as tl">
-  {{tl | json}}
-</ng-container>
-
