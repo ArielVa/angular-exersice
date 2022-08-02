@@ -1,9 +1,10 @@
 <div class="main-area">
   <h1>Welcome To Your Todo's App</h1>
-  <h2>Here Is Everything You Can Do:</h2>
+  <h2>By Ariel Vainshtein</h2>
+  <h2>{{date }}</h2>
   <div class="actions-area">
-    <button>Create New List</button>
-    <button>View All Lists</button>
+    <button (click)="handleNavigation(urls.addList)">Create New List</button>
+    <button (click)="handleNavigation(urls.edit)">View All Lists</button>
     <button>View All Items</button>
   </div>
 </div>

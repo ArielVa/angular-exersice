@@ -11,6 +11,11 @@ import { TitleComponent } from './components/title/title.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { StatDisplayComponent } from './components/stat-display/stat-display.component';
+import { ListDetailsComponent } from './components/list-details/list-details.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatMenuModule} from "@angular/material/menu";
+import {ReactiveFormsModule} from "@angular/forms";
+import { FormErrorDisplayerComponent } from './components/form-error-displayer/form-error-displayer.component';
 
 @NgModule({
   declarations: [
@@ -20,13 +25,18 @@ import { StatDisplayComponent } from './components/stat-display/stat-display.com
     ListsDetailsComponent,
     ItemsDetailsComponent,
     TitleComponent,
-    StatDisplayComponent
+    StatDisplayComponent,
+    ListDetailsComponent,
+    FormErrorDisplayerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    MatMenuModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

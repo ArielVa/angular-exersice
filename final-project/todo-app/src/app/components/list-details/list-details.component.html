@@ -1,0 +1,44 @@
+<h2>Edit List Details</h2>
+<ng-container *ngIf="{
+  action: action$ | async,
+  selectedColor: selectedColor$ | async,
+  selectedIcon: selectedIcon$ | async
+} as myObs">
+  <div class="list-details-form" [formGroup]="todoListFrom">
+    <div class="form-area">
+      <h4>Caption</h4>
+      <input [formControl]="getControlByFieldName('caption')">
+
+      <h4>Description</h4>
+      <textarea [formControl]="getControlByFieldName('description')"></textarea>
+
+      <h4>Icon:</h4>
+      <mat-select>
+        <mat-select-trigger>
+          <mat-icon [style.color]="myObs.selectedColor">{{myObs.selectedIcon}}</mat-icon>
+        </mat-select-trigger>
+        <mat-option *ngFor="let icon of icons" [value]="icon" (click)="selectedIcon$.next(icon)">
+          <mat-icon [style.color]="myObs.selectedColor">{{icon}}</mat-icon>
+        </mat-option>
+      </mat-select>
+
+      <h4>Color:</h4>
+      <select #colorSelector [style.color]="myObs.selectedColor" (change)="selectedColor$.next(colorSelector.value)">
+        <option *ngFor="let color of colorOptions"
+                [value]="color"
+                [style.color]="color"
+        >{{color}}</option>
+      </select>
+      <div class="form-save-area">
+        <span class="compactor"></span>
+        <button class="inactive">Save</button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<mat-menu #appMenu="matMenu">
+  <ng-template matMenuContent>
+    <button mat-menu-item>Settings</button>
+    <button mat-menu-item>Help</button>
+  </ng-template>
+</mat-menu>

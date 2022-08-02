@@ -42,7 +42,7 @@ export class StateService {
       caption: caption,
       description: description,
       color: color,
-      imageUrl: icon
+      icon: icon
     };
 
     this.appState = {
@@ -100,7 +100,7 @@ export class StateService {
   }
 
   async AddTodoItem(listId: number, caption: string): Promise<number> {
-    
+
     const item: TodoItem = {
       id: this.appState.todoItems.length + 1,
       caption: caption,
@@ -122,7 +122,7 @@ export class StateService {
   }
 
   async DeleteList(listId: number): Promise<void> {
-    
+
     this.appState = {
       todoLists: this.appState.todoLists.filter(list => list.id !== listId),
       todoItems: this.appState.todoItems.filter(item => item.listId !== listId)

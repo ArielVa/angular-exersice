@@ -1,0 +1,88 @@
+:host {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  padding: 12px;
+  color: crimson;
+}
+
+.list-details-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.form-area {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  background-color: darkgrey;
+  min-width: 600px;
+  border: 2px solid black;
+  border-radius: 6px;
+}
+
+.form-area {
+  padding: 8px 16px;
+}
+
+.form-area :nth-child(2n) {
+  padding: 8px 0;
+  margin-bottom: 16px;
+}
+
+input, textarea, select, mat-select {
+  font-size: 18px;
+  border: 1px solid black;
+  border-radius: 4px;
+  background-color: white;
+}
+
+input:focus, textarea:focus{
+  outline: none;
+  border: 2px solid black;
+}
+
+textarea {
+  resize: none;
+}
+
+.form-save-area {
+  display: flex;
+  flex-direction: row;
+}
+
+.form-save-area .compactor {
+  flex-grow: 1;
+}
+
+.form-save-area button {
+  width: 120px;
+  background-color: #53b6dc;
+  color: #eaeae4;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.form-save-area button:hover {
+  cursor: pointer;
+  background-color: #64cdff;
+}
+
+mat-select:hover, select:hover {
+  cursor: pointer;
+  background-color: #a4a8a8;
+}
+
+mat-select mat-select-trigger mat-icon {
+  padding: 24px 0;
+}
+
+mat-icon {
+  font-size: 36px;
+}
+
+input.ng-touched.ng-invalid, textarea.ng-touched.ng-invalid {
+  border: 1px solid crimson;
+  background: #eed3d3;
+}

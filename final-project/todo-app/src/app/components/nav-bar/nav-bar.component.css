@@ -13,14 +13,14 @@ nav a {
     text-transform: uppercase;
     font-weight: bold;
     padding: 8px 12px;
-    border-right: 2px dotted black;
+    border-right: 2px solid black;
     color: aliceblue;
     text-decoration: none;
 
 }
 
 nav a:hover, .activeLink {
-    color:antiquewhite;
+    color: antiquewhite;
     cursor: pointer;
     background-color: rgb(34, 126, 180);
 }
