@@ -1,0 +1,43 @@
+<ng-container *ngIf="{
+  todoList: todoList$ | async,
+  todoItems: todoItems$ | async,
+  isAddingNewItem: isAddingNewItem$ | async,
+  isDeletingCurrentList: isDeletingCurrentList$ | async
+} as myObs">
+  <h1>Lists > {{myObs.todoList!.caption}}</h1>
+  <mat-icon class="list-icon" [style.color]="myObs.todoList!.color">{{myObs.todoList!.icon}}</mat-icon>
+  <div class="buttons-area" *ngIf="!myObs.isDeletingCurrentList">
+    <h2>{{myObs.todoList!.description}}</h2>
+    <button (click)="isAddingNewItem$.next(true)">New List Item</button>
+    <button (click)="goToList(myObs.todoList!.id)">Edit List</button>
+    <button (click)="isDeletingCurrentList$.next(true)" class="btn-delete">Delete</button>
+  </div>
+  <div class="buttons-area" *ngIf="myObs.isDeletingCurrentList">
+    <h2 class="confirm-delete">Are you sure you want to delete the entire list?</h2>
+    <button (click)="isDeletingCurrentList$.next(false)">Cancel</button>
+    <button (click)="removeTodoList(myObs.todoList!.id)" class="btn-delete">Delete</button>
+  </div>
+
+  <div class="items-area">
+    <div *ngFor="let todoItem of myObs.todoItems">
+      <app-todo-item-presenter [caption]="todoItem.caption"
+                               [isCompleted]="todoItem.isCompleted"
+                               (completed)="updateTodoItemStatus(todoItem.id)">
+      </app-todo-item-presenter>
+    </div>
+    <div class="add-new-item-area" *ngIf="getControlByFieldName('caption') as field">
+      <div class="add-new-item-caption-area" *ngIf="myObs.isAddingNewItem">
+        <input type="checkbox">
+        <input #captionValue type="text" [formControl]="field">
+        <button [disabled]="!addNewTodoItemForm.valid" (click)="addNewTodoItem(captionValue.value)">+</button>
+      </div>
+      <app-form-error-display *ngIf="!field.pristine && field.errors" [errors]="field.errors"></app-form-error-display>
+    </div>
+    <div>
+    </div>
+  </div>
+
+</ng-container>
+
+
+

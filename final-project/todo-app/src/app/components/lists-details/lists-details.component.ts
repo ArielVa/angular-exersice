@@ -3,6 +3,7 @@ import {StateService} from "../../services/state.service";
 import {Observable} from "rxjs";
 import {TodoList} from "../../models/todo-list.model";
 import {Router} from "@angular/router";
+import {AppUrls} from "../../app-routing.module";
 
 @Component({
   selector: 'app-lists-details',
@@ -21,6 +22,7 @@ export class ListsDetailsComponent implements OnInit {
   }
 
   async redirectToListDetails(listId: number) {
-    await this.router.navigate([`lists/${listId}/edit`])
+    console.log(listId)
+    await this.router.navigate(listId > 0 ? [`lists/${listId}`] : [AppUrls().addList])
   }
 }

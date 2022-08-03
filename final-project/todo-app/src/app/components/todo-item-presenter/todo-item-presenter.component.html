@@ -1,0 +1,2 @@
+<input type="checkbox" [checked]="isCompleted" [name]="caption" (click)="updateTodoItemStatus()">
+<label [class.done]="isCompleted" [for]="caption">{{caption}}</label>

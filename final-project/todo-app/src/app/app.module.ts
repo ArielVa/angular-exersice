@@ -16,6 +16,9 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatMenuModule} from "@angular/material/menu";
 import {ReactiveFormsModule} from "@angular/forms";
 import { FormErrorDisplayComponent } from './components/form-error-display/form-error-display.component';
+import { ListItemsPresenterComponent } from './components/list-items-presenter/list-items-presenter.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { TodoItemPresenterComponent } from './components/todo-item-presenter/todo-item-presenter.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,9 @@ import { FormErrorDisplayComponent } from './components/form-error-display/form-
     TitleComponent,
     StatDisplayComponent,
     ListDetailsComponent,
-    FormErrorDisplayComponent
+    FormErrorDisplayComponent,
+    ListItemsPresenterComponent,
+    TodoItemPresenterComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,8 @@ import { FormErrorDisplayComponent } from './components/form-error-display/form-
     MatIconModule,
     MatSelectModule,
     MatMenuModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

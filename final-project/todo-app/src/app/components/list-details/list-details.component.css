@@ -76,13 +76,14 @@ option {
   background: #9d9c9c;
 }
 
-mat-select mat-select-trigger mat-icon {
-  padding: 24px 0;
+mat-icon {
+  transform: scale(1.35) translate(20%, -5%);
 }
 
-mat-icon {
-  font-size: 36px;
+mat-select mat-select-trigger mat-icon {
+  padding: 28px 0;
 }
+
 
 :not(.list-details-form).ng-touched.ng-invalid {
   border: 1px solid crimson;

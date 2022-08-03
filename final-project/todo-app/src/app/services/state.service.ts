@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import {BehaviorSubject, firstValueFrom, map, Observable} from 'rxjs';
 import { AppState, InitialAppState } from '../models/app-state.model';
 import { TodoItem } from '../models/todo-item.model';
 import { TodoList } from '../models/todo-list.model';
@@ -9,17 +9,30 @@ import { TodoList } from '../models/todo-list.model';
 })
 export class StateService {
 
-  appState: AppState = InitialAppState();
-  // appState: AppState = {
-  //   todoItems: [],
-  //   todoLists: Array(7).fill(0).map((_) => ({
-  //     id: 1,
-  //     color: 'blue',
-  //     icon: 'stars',
-  //     caption: 'Live Show',
-  //     description: "Prepare soft drinks and junk food"
-  //   }))
-  // }
+  // appState: AppState = InitialAppState();
+  appState: AppState = {
+    todoItems: [
+      {
+        id: 1,
+        caption: 'Milk',
+        listId: 1,
+        isCompleted: false
+      },
+      {
+        id: 2,
+        caption: 'Sugar',
+        listId: 1,
+        isCompleted: true
+      }
+    ],
+    todoLists: Array(5).fill(0).map((_, i) => ({
+      id: i+1,
+      color: 'blue',
+      icon: 'stars',
+      caption: 'Live Show',
+      description: "Prepare soft drinks and junk food"
+    }))
+  }
 
   appState$ = new BehaviorSubject<AppState>(this.appState);
 
@@ -74,12 +87,18 @@ export class StateService {
       ...this.appState,
       todoLists: this.appState.todoLists.map(todoList => todoList.id === list.id ? list : todoList)
     }
-    console.log(list)
-    console.log(this.appState)
     this.appState$.next(this.appState);
   }
 
+  async DeleteList(listId: number): Promise<void> {
 
+    this.appState = {
+      todoLists: this.appState.todoLists.filter(list => list.id !== listId),
+      todoItems: this.appState.todoItems.filter(item => item.listId !== listId)
+    }
+
+    this.appState$.next(this.appState);
+  }
   //#endregion
 
   //#region TodoItem
@@ -133,14 +152,22 @@ export class StateService {
     return item.id;
   }
 
-  async DeleteList(listId: number): Promise<void> {
+  async MarkAsCompleted(itemId: number): Promise<void> {
+    const updatedItem: TodoItem = {
+      ...(await firstValueFrom(this.getItem(itemId))),
+      isCompleted: true
+    };
 
     this.appState = {
-      todoLists: this.appState.todoLists.filter(list => list.id !== listId),
-      todoItems: this.appState.todoItems.filter(item => item.listId !== listId)
-    }
+      ...this.appState,
+      todoItems: this.appState.todoItems.map(item => item.id === itemId ? updatedItem : item)
+    };
 
     this.appState$.next(this.appState);
   }
+
+
+
+
   //#endregion
 }
