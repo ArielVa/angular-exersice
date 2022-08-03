@@ -10,6 +10,17 @@ import { TodoList } from '../models/todo-list.model';
 export class StateService {
 
   appState: AppState = InitialAppState();
+  // appState: AppState = {
+  //   todoItems: [],
+  //   todoLists: Array(7).fill(0).map((_) => ({
+  //     id: 1,
+  //     color: 'blue',
+  //     icon: 'stars',
+  //     caption: 'Live Show',
+  //     description: "Prepare soft drinks and junk food"
+  //   }))
+  // }
+
   appState$ = new BehaviorSubject<AppState>(this.appState);
 
   constructor() { }

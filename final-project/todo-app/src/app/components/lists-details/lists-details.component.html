@@ -1,1 +1,19 @@
-<p>lists-details works!</p>
+<ng-container *ngIf="{
+  lists: lists$ | async
+} as myObs">
+  <h1>Lists</h1>
+  <div class="lists-area">
+    <div class="card" *ngFor="let list of myObs.lists">
+      <div class="content" (click)="redirectToListDetails(list.id)">
+        <mat-icon [style.color]="list.color">{{list.icon}}</mat-icon>
+        <h2>{{list.caption}}</h2>
+      </div>
+    </div>
+    <div class="card">
+      <div class="content" (click)="redirectToListDetails(-1)">
+        <mat-icon class="add-icon">add</mat-icon>
+        <h2>New Todo List</h2>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,47 @@
+h1 {
+  color: crimson;
+  padding: 12px;
+}
+
+.lists-area {
+  display: flex;
+  flex-flow: row wrap;
+}
+.card {
+  width: 30%;
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+
+.content {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+  background: #d3d3d9;
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+.content:hover {
+  background: #dbdbec;
+  cursor: pointer;
+  border: 3px solid black;
+}
+
+mat-icon {
+  font-size: 42px;
+  transform-origin: 100% 100%;
+  transform: translate(-50%, -100%);
+}
+
+.card .content .add-icon {
+  color: #46cb6c;
+}
+
+
