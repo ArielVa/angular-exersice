@@ -66,6 +66,6 @@ export class ListItemsPresenterComponent implements OnInit {
 
   async removeTodoList(listId: number) {
     await this.stateService.DeleteList(listId);
-    await this.router.navigate([AppUrls().lists]);
+    await this.router.navigate([AppUrls().home]);
   }
 }

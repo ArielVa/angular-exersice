@@ -41,7 +41,7 @@ h1 {
 
 mat-icon {
   transform-origin: 100% 100%;
-  transform: translate(50%, -50%) scale(2);
+  transform: translate(40%, -30%) scale(2);
 }
 
 .card .content .add-icon {
