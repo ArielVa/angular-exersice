@@ -9,13 +9,15 @@
       <div *ngIf="getControlByFieldName('caption') as field">
         <h4>Caption</h4>
         <input [formControl]="field">
-        <app-form-error-display *ngIf="!field.pristine && field.errors" [errors]="field.errors"></app-form-error-display>
+        <app-form-error-display *ngIf="!field.pristine && field.errors" [errors]="field.errors">
+        </app-form-error-display>
       </div>
 
       <div *ngIf="getControlByFieldName('description') as field">
         <h4>Description</h4>
         <textarea [formControl]="field"></textarea>
-        <app-form-error-display *ngIf="!field.pristine && field.errors" [errors]="field.errors"></app-form-error-display>
+        <app-form-error-display *ngIf="!field.pristine && field.errors" [errors]="field.errors">
+        </app-form-error-display>
       </div>
 
       <div>
@@ -25,20 +27,16 @@
             <mat-icon [style.color]="myObs.selectedColor">{{myObs.selectedIcon}}</mat-icon>
           </mat-select-trigger>
           <mat-option *ngFor="let icon of icons" [value]="icon" (click)="selectedIcon$.next(icon)">
-            <mat-icon [style.color]="myObs.selectedColor" >{{icon}}</mat-icon>
+            <mat-icon [style.color]="myObs.selectedColor">{{icon}}</mat-icon>
           </mat-option>
         </mat-select>
       </div>
 
       <div>
         <h4>Color:</h4>
-        <select #colorSelector
-                [formControl]="getControlByFieldName('color')"
-                [style.color]="myObs.selectedColor"
-                (change)="selectedColor$.next(colorSelector.value)">
-          <option *ngFor="let color of colorOptions"
-                  [value]="color"
-                  [style.color]="color">{{color}}</option>
+        <select #colorSelector [formControl]="getControlByFieldName('color')" [style.color]="colorSelector.value"
+          (change)="selectedColor$.next(colorSelector.value)">
+          <option *ngFor="let color of colorOptions" [value]="color" [style.color]="color">{{color}}</option>
         </select>
       </div>
 

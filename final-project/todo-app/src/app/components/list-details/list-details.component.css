@@ -54,6 +54,7 @@ textarea {
   background-color: #53b6dc;
   color: #eaeae4;
   font-size: 16px;
+  border: 1px solid black;
   border-radius: 8px;
   align-self: flex-end;
 }
@@ -78,10 +79,9 @@ option {
 
 mat-icon {
   transform: scale(1.35) translate(20%, -5%);
-}
-
-mat-select mat-select-trigger mat-icon {
-  padding: 28px 0;
+  height: auto;
+  width: auto;
+  font-size: 30px;
 }
 
 

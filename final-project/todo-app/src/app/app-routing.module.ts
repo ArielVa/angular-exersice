@@ -7,6 +7,7 @@ import {TodoListEditorGuard} from "./guards/todo-list-editor.guard";
 import {ListDetailsComponent} from "./components/list-details/list-details.component";
 import {ViewTodoListsGuard} from "./guards/view-todo-lists.guard";
 import {ListItemsPresenterComponent} from "./components/list-items-presenter/list-items-presenter.component";
+import { InvalidUrlComponent } from './components/invalid-url/invalid-url.component';
 
 export function AppUrls() {
   return {
@@ -30,7 +31,8 @@ const routes: Routes = [
   {path: urls.lists, component: ListsDetailsComponent, canActivate: [ViewTodoListsGuard]},
   {path: urls.addList, component: ListDetailsComponent, canActivate: [TodoListEditorGuard]},
   {path: urls.edit, component: ListDetailsComponent},
-  {path: urls.listItems, component: ListItemsPresenterComponent}
+  {path: urls.listItems, component: ListItemsPresenterComponent},
+  {path: urls.outOfBounds, component: InvalidUrlComponent}
 ];
 
 @NgModule({

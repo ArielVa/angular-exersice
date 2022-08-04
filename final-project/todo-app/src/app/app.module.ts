@@ -19,6 +19,7 @@ import { FormErrorDisplayComponent } from './components/form-error-display/form-
 import { ListItemsPresenterComponent } from './components/list-items-presenter/list-items-presenter.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { TodoItemPresenterComponent } from './components/todo-item-presenter/todo-item-presenter.component';
+import { InvalidUrlComponent } from './components/invalid-url/invalid-url.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { TodoItemPresenterComponent } from './components/todo-item-presenter/tod
     ListDetailsComponent,
     FormErrorDisplayComponent,
     ListItemsPresenterComponent,
-    TodoItemPresenterComponent
+    TodoItemPresenterComponent,
+    InvalidUrlComponent
   ],
   imports: [
     BrowserModule,

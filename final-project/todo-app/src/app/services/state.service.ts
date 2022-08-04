@@ -9,30 +9,30 @@ import { TodoList } from '../models/todo-list.model';
 })
 export class StateService {
 
-  // appState: AppState = InitialAppState();
-  appState: AppState = {
-    todoItems: [
-      {
-        id: 1,
-        caption: 'Milk',
-        listId: 1,
-        isCompleted: false
-      },
-      {
-        id: 2,
-        caption: 'Sugar',
-        listId: 1,
-        isCompleted: true
-      }
-    ],
-    todoLists: Array(5).fill(0).map((_, i) => ({
-      id: i+1,
-      color: 'blue',
-      icon: 'stars',
-      caption: 'Live Show',
-      description: "Prepare soft drinks and junk food"
-    }))
-  }
+  appState: AppState = InitialAppState();
+  // appState: AppState = {
+  //   todoItems: [
+  //     {
+  //       id: 1,
+  //       caption: 'Milk',
+  //       listId: 1,
+  //       isCompleted: false
+  //     },
+  //     {
+  //       id: 2,
+  //       caption: 'Sugar',
+  //       listId: 1,
+  //       isCompleted: true
+  //     }
+  //   ],
+  //   todoLists: Array(5).fill(0).map((_, i) => ({
+  //     id: i+1,
+  //     color: 'blue',
+  //     icon: 'stars',
+  //     caption: 'Live Show',
+  //     description: "Prepare soft drinks and junk food"
+  //   }))
+  // }
 
   appState$ = new BehaviorSubject<AppState>(this.appState);
 

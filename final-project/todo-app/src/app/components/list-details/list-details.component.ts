@@ -31,7 +31,7 @@ export class ListDetailsComponent implements OnInit {
 
   todoListFrom = new FormGroup({
     caption: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required, ValidatorsCreator.minContentLengthValidator(3) ,ValidatorsCreator.minNumOfWordsValidator(3)]),
+    description: new FormControl('', [Validators.required, ValidatorsCreator.minContentLengthValidator(30) ,ValidatorsCreator.minNumOfWordsValidator(10)]),
     icon: new FormControl('', [Validators.required]),
     color: new FormControl('', [Validators.required])
   })
