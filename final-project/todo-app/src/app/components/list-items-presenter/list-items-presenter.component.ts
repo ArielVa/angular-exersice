@@ -56,6 +56,8 @@ export class ListItemsPresenterComponent implements OnInit {
     const listId = (await firstValueFrom(this.todoList$)).id;
 
     await this.stateService.AddTodoItem(listId, caption);
+    
+    this.addNewTodoItemForm.reset();
 
     this.isAddingNewItem$.next(false);
   }

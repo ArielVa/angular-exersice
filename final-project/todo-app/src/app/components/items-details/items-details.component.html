@@ -1,1 +1,9 @@
-<p>items-details works!</p>
+<ng-container *ngIf="todoItems$ | async as todoItems">
+  <ng-container *ngIf="todoItems.length">
+    <app-todo-item-presenter *ngFor="let todoItem of todoItems" [caption]="todoItem.caption"
+      [isCompleted]="todoItem.isCompleted" (completed)="markTodoItemAsCompleted(todoItem.id)"></app-todo-item-presenter>
+  </ng-container>
+  <ng-container *ngIf="!todoItems.length">
+    <h2>All of your todo items are have been completed</h2>
+  </ng-container>
+</ng-container>

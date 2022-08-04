@@ -82,11 +82,9 @@ export class ListDetailsComponent implements OnInit {
       color: this.todoListFrom.value.color ? this.todoListFrom.value.color : list.color
     }
     if(action) {
-      console.log("edit")
       await this.stateService.ModifyList(list)
     } else {
-      console.log("save")
-      const n = await this.stateService.AddList(list.caption, list.description, list.color, list.icon)
+      await this.stateService.AddList(list.caption, list.description, list.color, list.icon)
     }
     await this.router.navigate([AppUrls().home])
   }

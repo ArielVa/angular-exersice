@@ -18,11 +18,9 @@ export class TodoListEditorGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot):  Promise<boolean | UrlTree> {
 
-    console.log(state.url)
     if(route.params['id'] !== '-1') {
       if (this.memory === state.url) return true;
       this.memory = state.url;
-      console.log("redirected")
 
       return this.router.createUrlTree([this.memory])
     }

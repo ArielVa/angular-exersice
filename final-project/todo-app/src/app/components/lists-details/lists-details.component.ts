@@ -22,7 +22,6 @@ export class ListsDetailsComponent implements OnInit {
   }
 
   async redirectToListDetails(listId: number) {
-    console.log(listId)
     await this.router.navigate(listId > 0 ? [`lists/${listId}`] : [AppUrls().addList])
   }
 }

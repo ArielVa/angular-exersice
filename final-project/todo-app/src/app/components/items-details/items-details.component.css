@@ -1,0 +1,14 @@
+:host {
+    padding: 20px;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+:host :nth-child(2n) {
+    padding-top: 8px;
+}
+
+
+h2 {
+    color: rgb(20, 230, 72)
+}

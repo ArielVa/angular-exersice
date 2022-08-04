@@ -19,12 +19,9 @@
   </div>
 
   <div class="items-area">
-    <div *ngFor="let todoItem of myObs.todoItems">
-      <app-todo-item-presenter [caption]="todoItem.caption"
-                               [isCompleted]="todoItem.isCompleted"
-                               (completed)="updateTodoItemStatus(todoItem.id)">
-      </app-todo-item-presenter>
-    </div>
+    <app-todo-item-presenter *ngFor="let todoItem of myObs.todoItems" [caption]="todoItem.caption"
+      [isCompleted]="todoItem.isCompleted" (completed)="updateTodoItemStatus(todoItem.id)">
+    </app-todo-item-presenter>
     <div class="add-new-item-area" *ngIf="getControlByFieldName('caption') as field">
       <div class="add-new-item-caption-area" *ngIf="myObs.isAddingNewItem">
         <input type="checkbox">
@@ -38,6 +35,3 @@
   </div>
 
 </ng-container>
-
-
-
