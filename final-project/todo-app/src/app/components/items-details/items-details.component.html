@@ -4,6 +4,6 @@
       [isCompleted]="todoItem.isCompleted" (completed)="markTodoItemAsCompleted(todoItem.id)"></app-todo-item-presenter>
   </ng-container>
   <ng-container *ngIf="!todoItems.length">
-    <h2>All of your todo items are have been completed</h2>
+    <h2>You do not have any uncompleted todo items</h2>
   </ng-container>
 </ng-container>
