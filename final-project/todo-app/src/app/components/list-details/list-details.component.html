@@ -22,7 +22,7 @@
 
       <div>
         <h4>Icon:</h4>
-        <mat-select [formControl]="getControlByFieldName('icon')">
+        <mat-select class="myPanelClass" [formControl]="getControlByFieldName('icon')">
           <mat-select-trigger>
             <mat-icon [style.color]="myObs.selectedColor">{{myObs.selectedIcon}}</mat-icon>
           </mat-select-trigger>

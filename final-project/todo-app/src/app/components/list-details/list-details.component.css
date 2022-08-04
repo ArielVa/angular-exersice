@@ -79,9 +79,10 @@ option {
 
 mat-icon {
   transform: scale(1.35) translate(20%, -5%);
-  height: auto;
-  width: auto;
-  font-size: 30px;
+}
+
+mat-select mat-select-trigger mat-icon {
+  padding: 28px 0;
 }
 
 
@@ -89,3 +90,5 @@ mat-icon {
   border: 1px solid crimson;
   background: #eed3d3;
 }
+
+
