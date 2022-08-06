@@ -6,13 +6,13 @@
     <div class="card" *ngFor="let list of myObs.lists">
       <div class="content" (click)="redirectToListDetails(list.id)">
         <mat-icon [style.color]="list.color">{{list.icon}}</mat-icon>
-        <h2>{{list.caption}}</h2>
+        <h4>{{list.caption}}</h4>
       </div>
     </div>
     <div class="card">
       <div class="content" (click)="redirectToListDetails(-1)">
         <mat-icon class="add-icon">add</mat-icon>
-        <h2>New Todo List</h2>
+        <h3>New Todo List</h3>
       </div>
     </div>
   </div>

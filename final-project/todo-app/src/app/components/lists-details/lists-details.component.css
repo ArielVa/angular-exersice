@@ -12,6 +12,7 @@ h1 {
   display: flex;
   flex-flow: row wrap;
 }
+
 .card {
   width: 30%;
   margin: 16px;
