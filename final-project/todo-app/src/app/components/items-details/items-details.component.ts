@@ -23,17 +23,6 @@ export class ItemsDetailsComponent implements OnInit {
   }
 
   async changeItemStatus(itemId: number, newStatus: ItemStatus) {
-    if(newStatus === ItemStatus.pending) {
-      await this.stateService.setItemStatus(itemId, newStatus);
-      interval( 1000).pipe(
-        filter(t => t === 5),
-        take(1),
-        map(async _ => await this.stateService.setItemStatus(itemId, ItemStatus.complete)),
-        takeUntil(this.statusChangerSignal$)
-      ).subscribe()
-    } else if(newStatus === ItemStatus.complete) {
-      await this.stateService.setItemStatus(itemId, newStatus);
-      this.statusChangerSignal$.next('');
-    }
+    await this.stateService.setItemStatus(itemId, newStatus);
   }
 }

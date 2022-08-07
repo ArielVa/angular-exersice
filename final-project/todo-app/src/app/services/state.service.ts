@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, firstValueFrom, map, Observable} from 'rxjs';
+import {BehaviorSubject, firstValueFrom, map, Observable, Subject, takeUntil, timer} from 'rxjs';
 import {AppState} from '../models/app-state.model';
 import {ItemStatus, TodoItem} from '../models/todo-item.model';
 import {TodoList} from '../models/todo-list.model';
@@ -34,6 +34,8 @@ export class StateService {
     }))
   }
 
+
+  itemStatusSignals: Subject<void>[] = [];
   appState$ = new BehaviorSubject<AppState>(this.appState);
 
   constructor() { }
@@ -105,21 +107,26 @@ export class StateService {
   getAllItems(): Observable<TodoItem[]> {
     return this.getAppStateObs()
     .pipe(
-      map(appState => appState.todoItems)
+      map(appState =>  {
+        this.itemStatusSignals = Array(appState.todoItems.length)
+          .fill('')
+          .map(_ => new Subject<void>())
+        return appState.todoItems
+      })
     );
   }
 
   getItem(id: number): Observable<TodoItem> {
-    return this.getAppStateObs()
+    return this.getAllItems()
     .pipe(
-      map(appState => appState.todoItems.find(item => item.id === id)!)
+      map(items => items.find(item => item.id === id)!)
     );
   }
 
   getItemsOfList(listId: number): Observable<TodoItem[]> {
-    return this.getAppStateObs()
+    return this.getAllItems()
     .pipe(
-      map(appState => appState.todoItems.filter(item => item.listId === listId))
+      map(items => items.filter(item => item.listId === listId))
     );
   }
 
@@ -147,6 +154,9 @@ export class StateService {
       ]
     }
 
+    this.itemStatusSignals = Array(this.appState.todoItems.length)
+      .fill('')
+      .map(_ => new Subject<void>())
     this.appState$.next(this.appState);
 
     return item.id;
@@ -166,20 +176,39 @@ export class StateService {
     this.appState$.next(this.appState);
   }
 
-  async setItemStatus(itemId: number, status: ItemStatus): Promise<void> {
-
-    let updatedItem = this.appState.todoItems.find(item => item.id === itemId)!
+  private updateItemStatusState(updatedItem: TodoItem, newStatus: ItemStatus) {
     updatedItem = {
       ...updatedItem,
-      status: status
+      status: newStatus
     }
 
     this.appState = {
       ...this.appState,
-      todoItems: this.appState.todoItems.map(item => item.id === itemId ? updatedItem : item)
+      todoItems: this.appState.todoItems.map(item => item.id === updatedItem.id ? updatedItem : item)
     }
 
     this.appState$.next(this.appState);
+  }
+
+  async setItemStatus(itemId: number, newStatus: ItemStatus): Promise<void> {
+
+    let updatedItem = this.appState.todoItems.find(item => item.id === itemId)!
+    let idx = this.appState.todoItems.indexOf(updatedItem);
+
+    console.log(this.itemStatusSignals[idx])
+    if(newStatus === ItemStatus.pending) {
+      this.updateItemStatusState(updatedItem, ItemStatus.pending);
+      timer(5 * 1000).pipe(
+        map(t => this.updateItemStatusState(updatedItem, ItemStatus.complete)),
+        takeUntil(this.itemStatusSignals[idx])
+      ).subscribe({
+        complete() {
+        }
+      })
+    } else {
+      this.itemStatusSignals[idx].next()
+      this.updateItemStatusState(updatedItem, newStatus);
+    }
   }
 
   //#endregion

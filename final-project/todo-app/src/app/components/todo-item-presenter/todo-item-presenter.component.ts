@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ItemStatus} from "../../models/todo-item.model";
+import {StateService} from "../../services/state.service";
 
 @Component({
   selector: 'app-todo-item-presenter',
@@ -17,28 +18,14 @@ export class TodoItemPresenterComponent implements OnInit {
   todoItemStatuses = ItemStatus;
 
   @Output()
-  completed = new EventEmitter<boolean>();
-
-  @Output()
   itemStatusChanged = new EventEmitter<ItemStatus>();
 
-  constructor() { }
+  constructor(private stateService: StateService) { }
 
   ngOnInit(): void {
   }
 
-  updateTodoItemStatus() {
-    this.completed.emit(true)
-  }
-
   changeItemState() {
-    if(this.status === ItemStatus.complete) return;
-
-    if(this.status === ItemStatus.open) {
-      this.status = ItemStatus.pending
-    } else if (this.status === ItemStatus.pending) {
-      this.status = ItemStatus.open;
-    }
-    this.itemStatusChanged.emit(this.status)
+    this.itemStatusChanged.next(this.status === ItemStatus.open ? ItemStatus.pending : ItemStatus.open)
   }
 }
