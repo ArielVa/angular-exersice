@@ -6,8 +6,11 @@ export interface TodoList {
     readonly color: string;
 }
 
-export function TodoListIcons() {
-  return [
-    'shopping_cart', 'stars', 'work', 'event', 'flag'
-  ];
-}
+
+export const TODO_LIST_ICONS = [
+  'shopping_cart', 'stars', 'work', 'event', 'flag'
+];
+
+export const TODO_LIST_COLORS = [
+  'red', 'green', 'blue', 'yellow', 'pink', 'purple', 'teal', 'azure'
+];

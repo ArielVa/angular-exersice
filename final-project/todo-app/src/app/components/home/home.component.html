@@ -1,7 +1,7 @@
 <div class="main-area">
   <h1>Welcome To Your Todo's App</h1>
   <h2>By Ariel Vainshtein</h2>
-  <h2>{{date }}</h2>
+  <h2>{{date | date:'dd/MM/yyyy' }}</h2>
   <div class="actions-area">
     <button (click)="handleNavigation(urls.addList)">Create New List</button>
     <button (click)="handleNavigation(urls.lists)">View All Lists</button>

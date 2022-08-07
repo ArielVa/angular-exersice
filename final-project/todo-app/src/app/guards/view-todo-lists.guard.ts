@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {firstValueFrom, Observable} from 'rxjs';
 import {StateService} from "../services/state.service";
-import {AppUrls} from "../app-routing.module";
+import {APP_URLS} from "../app-routing.module";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class ViewTodoListsGuard implements CanActivate {
 
     const numLists = (await firstValueFrom(this.stateService.getAllLists())).length
 
-    if(numLists === 0) return this.router.createUrlTree([AppUrls().addList]);
+    if(numLists === 0) return this.router.createUrlTree([APP_URLS.addList]);
 
     return true;
 

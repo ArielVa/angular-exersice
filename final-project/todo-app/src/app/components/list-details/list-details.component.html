@@ -34,9 +34,10 @@
 
       <div>
         <h4>Color:</h4>
-        <select #colorSelector [formControl]="getControlByFieldName('color')" [style.color]="colorSelector.value"
+        <select #colorSelector [formControl]="getControlByFieldName('color')"
+                [style.color]="myObs.selectedColor"
           (change)="selectedColor$.next(colorSelector.value)">
-          <option *ngFor="let color of colorOptions" [value]="color" [style.color]="color">{{color}}</option>
+          <option *ngFor="let color of colors" [value]="color" [style.color]="color">{{color}}</option>
         </select>
       </div>
 
@@ -44,5 +45,8 @@
         <button [disabled]="!todoListFrom.valid" (click)="saveTodoList()">Save</button>
       </div>
     </div>
+    <app-form-error-display [errors]="todoListFrom.errors">
+    </app-form-error-display>
+
   </div>
 </ng-container>

@@ -1,38 +1,38 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, firstValueFrom, map, Observable} from 'rxjs';
-import { AppState, InitialAppState } from '../models/app-state.model';
-import { TodoItem } from '../models/todo-item.model';
-import { TodoList } from '../models/todo-list.model';
+import {AppState} from '../models/app-state.model';
+import {ItemStatus, TodoItem} from '../models/todo-item.model';
+import {TodoList} from '../models/todo-list.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
 
-  appState: AppState = InitialAppState();
-  // appState: AppState = {
-  //   todoItems: [
-  //     {
-  //       id: 1,
-  //       caption: 'Milk',
-  //       listId: 1,
-  //       isCompleted: false
-  //     },
-  //     {
-  //       id: 2,
-  //       caption: 'Sugar',
-  //       listId: 1,
-  //       isCompleted: true
-  //     }
-  //   ],
-  //   todoLists: Array(5).fill(0).map((_, i) => ({
-  //     id: i+1,
-  //     color: 'blue',
-  //     icon: 'stars',
-  //     caption: 'Live Show With A Name',
-  //     description: "Prepare soft drinks and junk food"
-  //   }))
-  // }
+  // appState: AppState = InitialAppState();
+  appState: AppState = {
+    todoItems: [
+      {
+        id: 1,
+        caption: 'Milk',
+        listId: 1,
+        status: ItemStatus.open
+      },
+      {
+        id: 2,
+        caption: 'Sugar',
+        listId: 1,
+        status: ItemStatus.open
+      }
+    ],
+    todoLists: Array(1).fill(0).map((_, i) => ({
+      id: i+1,
+      color: 'blue',
+      icon: 'stars',
+      caption: 'Live Show With A Name',
+      description: "Prepare soft drinks and junk food"
+    }))
+  }
 
   appState$ = new BehaviorSubject<AppState>(this.appState);
 
@@ -126,7 +126,7 @@ export class StateService {
   getAllNotCompletedItems(): Observable<TodoItem[]> {
     return this.getAllItems()
     .pipe(
-      map(items => items.filter(item => !item.isCompleted))
+      map(items => items.filter(item => item.status !== ItemStatus.complete))
     )
   }
 
@@ -135,7 +135,7 @@ export class StateService {
     const item: TodoItem = {
       id: this.appState.todoItems.length + 1,
       caption: caption,
-      isCompleted: false,
+      status: ItemStatus.open,
       listId: listId
     }
 
@@ -155,7 +155,7 @@ export class StateService {
   async MarkAsCompleted(itemId: number): Promise<void> {
     const updatedItem: TodoItem = {
       ...(await firstValueFrom(this.getItem(itemId))),
-      isCompleted: true
+      status: ItemStatus.complete
     };
 
     this.appState = {
@@ -166,8 +166,21 @@ export class StateService {
     this.appState$.next(this.appState);
   }
 
+  async setItemStatus(itemId: number, status: ItemStatus): Promise<void> {
 
+    let updatedItem = this.appState.todoItems.find(item => item.id === itemId)!
+    updatedItem = {
+      ...updatedItem,
+      status: status
+    }
 
+    this.appState = {
+      ...this.appState,
+      todoItems: this.appState.todoItems.map(item => item.id === itemId ? updatedItem : item)
+    }
+
+    this.appState$.next(this.appState);
+  }
 
   //#endregion
 }

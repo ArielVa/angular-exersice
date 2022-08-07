@@ -2,4 +2,5 @@
   <div *ngIf="errors['required'] as err">Required field</div>
   <div *ngIf="errors['minLength'] as err">Text length: {{err.current}} / {{err.required}}.</div>
   <div *ngIf="errors['numWords'] as err">Num words: {{err.current}} / {{err.required}}.</div>
+  <div *ngIf="errors['colorIconCombo'] as err">The combination of the color {{err.currentColor}} with the icon {{err.expectedIcon}} isn't allowed.</div>
 </div>

@@ -1,4 +1,4 @@
-:host {
+.items-area {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -13,7 +13,7 @@ input[type="checkbox"] + label {
   margin-left: 8px;
 }
 
-input[type="checkbox"]:checked {
+input[type="checkbox"]:checked:not(.pending) {
   pointer-events: none;
 }
 
@@ -21,7 +21,15 @@ input[type="checkbox"]:not(checked) {
   cursor: pointer;
 }
 
-label.done {
+input[type="checkbox"].pending {
+  accent-color: red;
+}
+
+label.pending {
+  color: red
+}
+
+label.complete {
   text-decoration: line-through;
   opacity: 0.5;
 }

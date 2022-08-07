@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { StateService } from 'src/app/services/state.service';
 import {Router} from "@angular/router";
-import {AppUrls} from "../../app-routing.module";
+import {APP_URLS} from "../../app-routing.module";
 
 @Component({
   selector: 'app-home',
@@ -15,9 +15,9 @@ export class HomeComponent implements OnInit {
   numItems$!: Observable<number>;
   numActiveItems$!: Observable<number>;
 
-  date!: string;
+  date: number = Date.now();
 
-  urls = AppUrls();
+  urls = APP_URLS;
 
   constructor(private stateService: StateService,
               private router: Router) { }
@@ -35,11 +35,6 @@ export class HomeComponent implements OnInit {
     this.numActiveItems$ = this.stateService.getAllNotCompletedItems().pipe(
       map(openItems => openItems.length)
     );
-
-
-    const d = new Date();
-    this.date = d.getDay() + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
-
   }
 
   handleNavigation(url: string) {

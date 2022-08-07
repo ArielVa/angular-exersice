@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, } from "@angular/router";
 import {BehaviorSubject, firstValueFrom, map, Observable, switchAll, take} from "rxjs";
-import {TodoList, TodoListIcons} from "../../models/todo-list.model";
+import {TODO_LIST_COLORS, TODO_LIST_ICONS, TodoList} from "../../models/todo-list.model";
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {StateService} from "../../services/state.service";
-import {AppUrls} from "../../app-routing.module";
+import {APP_URLS} from "../../app-routing.module";
 import {ValidatorsCreator} from "../../utilities/validators-creator";
 
 @Component({
@@ -14,19 +14,16 @@ import {ValidatorsCreator} from "../../utilities/validators-creator";
 })
 export class ListDetailsComponent implements OnInit {
 
-  colorOptions: string[] = [
-    'red', 'green', 'blue', 'yellow', 'pink', 'purple', 'teal', 'azure'
-  ];
+  colors: string[] = TODO_LIST_COLORS;
+  icons: string[] = TODO_LIST_ICONS;
 
-  selectedColor$ = new BehaviorSubject(this.colorOptions[0]);
-
-  icons = TodoListIcons();
-  selectedIcon$ = new BehaviorSubject('');
+  selectedColor$ = new BehaviorSubject('red');
+  selectedIcon$ = new BehaviorSubject('flags');
 
   /*
   false = save, true = edit
   * */
-  action$!: Observable<boolean>
+  action$!: Observable<number>
   todoList$!: Observable<TodoList>
 
   todoListFrom = new FormGroup({
@@ -34,13 +31,17 @@ export class ListDetailsComponent implements OnInit {
     description: new FormControl('', [Validators.required, ValidatorsCreator.minContentLengthValidator(30) ,ValidatorsCreator.minNumOfWordsValidator(10)]),
     icon: new FormControl('', [Validators.required]),
     color: new FormControl('', [Validators.required])
-  })
+  },
+    {
+      validators: [ValidatorsCreator.iconColorComboValidator('yellow', 'flag')]
+    })
 
   constructor(private routerStateSnapshot: ActivatedRoute,
               private stateService: StateService,
               private router: Router) { }
 
   async ngOnInit() {
+
     this.action$ = this.routerStateSnapshot.params.pipe(
       map(param => param['id'])
     );
@@ -73,6 +74,7 @@ export class ListDetailsComponent implements OnInit {
 
   async saveTodoList() {
     const action = await firstValueFrom(this.action$);
+    console.log(action)
     let list = await firstValueFrom(this.todoList$)
     list = {
       ...list,
@@ -81,11 +83,11 @@ export class ListDetailsComponent implements OnInit {
       icon: this.todoListFrom.value.icon ? this.todoListFrom.value.icon : list.icon,
       color: this.todoListFrom.value.color ? this.todoListFrom.value.color : list.color
     }
-    if(action) {
+    if(Number(action) !== -1) {
       await this.stateService.ModifyList(list)
     } else {
       await this.stateService.AddList(list.caption, list.description, list.color, list.icon)
     }
-    await this.router.navigate([AppUrls().home])
+    await this.router.navigate([APP_URLS.home])
   }
 }

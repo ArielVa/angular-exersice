@@ -1,2 +1,11 @@
-<input type="checkbox" [checked]="isCompleted" [name]="caption" (click)="updateTodoItemStatus()">
-<label [class.done]="isCompleted" [for]="caption">{{caption}}</label>
+<div  class="items-area">
+  <input type="checkbox"
+         [checked]="status !== todoItemStatuses.open"
+         [name]="caption"
+         [class.pending]="status === todoItemStatuses.pending"
+         (click)="changeItemState()">
+  <label [class.complete]="status === todoItemStatuses.complete"
+         [class.pending]="status === todoItemStatuses.pending"
+         [for]="caption">{{caption}}</label>
+
+</div>
